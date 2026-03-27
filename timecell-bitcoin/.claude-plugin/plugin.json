@@ -9,7 +9,5 @@
   "repository": "https://github.com/timecell/timecell-plugins",
   "license": "MIT",
   "keywords": ["bitcoin", "btc", "temperature", "dca", "family-office"],
-  "dependencies": {
-    "timecell": ">=1.0.0"
-  }
+  "dependencies": ["timecell"]
 }
