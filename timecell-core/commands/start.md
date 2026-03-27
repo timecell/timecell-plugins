@@ -5,85 +5,46 @@ argument-hint: ""
 
 # /tc:start — Portfolio Health Check
 
-## Tool Call Budget: 3-4 calls maximum
+## Budget: 2 tool calls max. Do NOT use WebSearch, ToolSearch, or load skills.
 
-Do NOT load skills as separate tool calls. All formulas are in `references/computation-formulas.md` (already in context).
+## Step 1: Read + Fetch (1 bash call)
 
-## Step 1: Read All Data (1 tool call — batch read)
+```bash
+cat profile.md entities/*.md 2>/dev/null; echo "===SEP==="; ls -t snapshots/*.md 2>/dev/null | head -1 | xargs cat 2>/dev/null; echo "===SEP==="; grep -c "^## [0-9]" memory/session-log.md 2>/dev/null || echo 1; echo "===SEP==="; python3 scripts/fetch-exchange-rates.py 2>/dev/null
+```
 
-Read in a single batch:
-- `profile.md` — identity, goals, expenses, base currency
-- Every file in `entities/` — all accounts and assets
-- Latest file in `snapshots/` (most recent by filename date)
-- `memory/session-log.md` — count ## entries for session count
-
-**Session count:** Count `## YYYY-MM-DD` lines in session-log.md per the Session Count formula in computation-formulas.md.
+Returns: profile, entities, latest snapshot, session count, exchange rates (BTC price under "BTC" key).
 
 **If no profile.md:** Stop → "Welcome to TimeCell! Run /tc:setup to get started."
 **If no entities/:** Stop → "No holdings found. Run /tc:setup to add your accounts."
 
-## Step 2: Fetch Exchange Rates (0-1 tool call)
+## Step 2: Compute + Write snapshot (1 tool call)
 
-If entities use more than one currency:
-```bash
-python3 scripts/fetch-exchange-rates.py
-```
+Compute from step 1 data:
+- **Net worth:** sum entity values, convert currencies. BTC price under "BTC" key in rates.
+- **Allocation:** entity_value / total × 100, round to whole %
+- **Runway:** (cash + treasuries + liquid crypto at market) / monthly_burn
+- **Guardrails** (thresholds below)
+- **Delta** from previous snapshot
 
-If single-currency portfolio: skip (0 tool calls).
+**Guardrail thresholds:**
+- Runway: CRITICAL < 12mo, WARNING < 24mo, SAFE 24-36mo, STRONG > 36mo
+- Single entity: CRITICAL > 50%, WARNING > 40%
+- Asset class: WARNING > 50%
+- Liquid = cash, treasuries, equities, crypto
 
-## Step 3: Compute Everything Inline (0 tool calls)
+Write snapshot to `snapshots/YYYY-MM-DD.md` with tables.
 
-Apply ALL formulas from `references/computation-formulas.md`:
+## Step 3: Respond (0 tool calls)
 
-1. **Net Worth** — sum entities, convert currencies
-2. **Allocation** — percentage per asset class and entity
-3. **Runway** — liquid assets / monthly burn
-4. **Guardrail Zones** — apply thresholds to runway, concentration
-5. **Snapshot Delta** — compare to previous snapshot (if exists)
+Apply lifecycle stage greeting (session count → stage: 1-3 welcome+starters, 4-10 welcome+hint, 11+ agenda).
 
-**Snapshot staleness:** If latest snapshot date is > 7 days ago, note "Last snapshot is X days old."
+1. Portfolio table
+2. Guardrail table
+3. Delta
+4. CRITICAL items only
+5. React dashboard artifact
 
-## Step 4: Save Snapshot (1 tool call)
+**Plugin-Aware:** If `btc-check` command exists: run `python3 scripts/fetch-btc-data.py` as part of Step 1 bash call, read `references/bitcoin-formulas.md`, and add BTC Temperature + Selling Status + Crash Readiness sections. Otherwise: treat BTC as a regular asset with price from exchange rates.
 
-PreToolUse hook runs snapshot-before-write.py automatically. Write to `snapshots/YYYY-MM-DD.md`:
-
-```
----
-date: YYYY-MM-DD
-base_currency: [from profile]
-exchange_rates: { [rates used, if multi-currency] }
-total_net_worth: [computed]
-runway_months: [computed]
----
-
-| Entity | Asset Class | Currency | Value (Local) | Value (Base) | % of Total |
-|--------|------------|----------|---------------|-------------|------------|
-| ... | ... | ... | ... | ... | ... |
-| **Total** | | | | **$X,XXX,XXX** | **100%** |
-
-| Guardrail | Threshold | Actual | Status |
-|-----------|-----------|--------|--------|
-| ... | ... | ... | ... |
-```
-
-## Step 5: Present Dashboard (0 tool calls — in response)
-
-Apply lifecycle stage greeting from timecell.md. Lead with numbers (Speed to Value).
-
-1. Portfolio table (net worth by entity and asset class)
-2. Guardrail status table
-3. Change since last snapshot (if exists)
-4. 0-3 priority items (CRITICAL/WARNING guardrails only)
-5. React dashboard artifact (net worth hero, allocation bars, guardrail cards)
-
-### Plugin-Aware
-If bitcoin-specific skills are available: include BTC temperature and custody sections.
-If NOT available: show BTC as regular asset class with standard allocation analysis.
-
-## Output Rules
-- Tables first, narrative second
-- Bold totals row
-- Round percentages to whole numbers
-- Comma separators for numbers > 999
-- Guardrail labels: CRITICAL / WARNING / WATCH / SAFE / STRONG (no emoji)
-- See `references/formatting.md` for full standards
+**Output rules:** Tables first, bold totals, whole % numbers, comma separators > 999, no emoji.

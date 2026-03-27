@@ -5,92 +5,69 @@ argument-hint: ""
 
 # /tc:monthly — Monthly Review
 
-## Tool Call Budget: 4-5 calls maximum
-
-Do NOT load skills. All formulas in `references/computation-formulas.md` (already in context).
+## Budget: 3 tool calls max
 
 ## Pre-Check
-- Session count from session-log.md entry count (per Session Count formula)
-- If session_count <= 3: redirect to /tc:start → "Let's build a few more snapshots first."
-- Need 2+ snapshots for trends. If fewer: run /tc:start instead.
+Session count = `grep -c "^## [0-9]" memory/session-log.md`.
+- If session_count <= 3 or < 2 snapshots: redirect to /tc:start ("Let's build a few more snapshots first.")
 
-## Step 1: Read All Data (1 tool call — batch read)
-
-Read in a single batch:
-- `profile.md`
-- Every file in `entities/`
-- ALL files in `snapshots/` (for trend analysis)
-- `memory/session-log.md`, `memory/values.md`, `memory/context-notes.md`
-- All files in `decisions/` (for pending actions)
-
-## Step 2: Fetch Exchange Rates (0-1 tool call)
+## Step 1: Read All Data (1 bash call)
 
 ```bash
-python3 scripts/fetch-exchange-rates.py
+cat profile.md entities/*.md snapshots/*.md memory/*.md decisions/*.md 2>/dev/null; echo "===SEP==="; python3 scripts/fetch-exchange-rates.py 2>/dev/null
 ```
 
-Skip if single-currency portfolio.
+Returns: profile, entities, all snapshots (for trends), memory, decisions, exchange rates.
 
-## Step 3: Compute Everything Inline (0 tool calls)
+## Step 2: Compute Everything Inline (0 tool calls)
 
-Apply ALL formulas from `references/computation-formulas.md`:
+**Portfolio overview:** Net worth, allocation, runway, guardrails (same as /start).
 
-### Portfolio Overview
-Net worth, allocation, runway, guardrails — same as /start.
+**MoM trends:**
+- nw_change = latest - month_ago, pct = change/month_ago × 100
+- Flag allocation drift > 5%
 
-### Month-over-Month Trends
-```
-FOR each snapshot in date order:
-  track total_net_worth, allocation_pcts, guardrail_zones
-nw_mom_change = latest_nw - month_ago_nw
-nw_mom_pct = ROUND(nw_mom_change / month_ago_nw * 100, 1)
-Flag allocation drift > 5% for any class.
-```
+**Crash survival (3 scenarios):**
+- Mild: Equities −15%, Crypto −20%
+- Severe: Equities −30%, Crypto −50%, Property −10%
+- Extended: Equities −40%, Crypto −60%, Property −15%
+- Compute post-crash NW, runway for each
 
-### Crash Survival
-Apply **Crash Survival** formulas from computation-formulas.md (3 scenarios).
-For each: post-crash NW, runway, and guardrail status.
+**Goal progress:**
+- projected = current + (months_remaining × monthly_contribution)
+- On Track if projected >= target, At Risk if >= 80% of target, Off Track otherwise
 
-### Goal Progress
-Apply **Goal Progress** formulas from computation-formulas.md.
+**Guardrail calibration:** current_zone vs month_ago_zone → Improving/Stable/Deteriorating
 
-### Guardrail Calibration
-```
-FOR each guardrail:
-  current_zone vs month_ago_zone
-  trend = "Improving" / "Stable" / "Deteriorating"
-```
+**Thresholds:**
+- Runway: CRITICAL < 12mo, WARNING 12-18mo, SAFE 24-36mo, STRONG > 36mo
+- Entity: CRITICAL > 50%, WARNING > 30%
+- Asset class: CRITICAL > 70%, WARNING > 50%
 
-## Step 4: Write Snapshot + Session Log (1-2 tool calls)
+## Step 3: Write Snapshot + Log (1-2 tool calls)
 
-Write snapshot to `snapshots/YYYY-MM-DD.md` (same format as /start).
+Write `snapshots/YYYY-MM-DD.md` (same format as /start).
 
 Append to `memory/session-log.md`:
 ```
 ## YYYY-MM-DD — Monthly Review
 - Net worth: $X,XXX,XXX (MoM: +X.X%)
-- Guardrails: [zone summary]
-- Goals: [status summary]
-- Key items: [CRITICAL/WARNING items]
+- Guardrails: [summary]
+- Goals: [summary]
 ```
 
-## Step 5: Present Monthly Memo (0 tool calls)
+## Step 4: Present (0 tool calls)
 
-Apply lifecycle stage greeting. Lead with numbers.
+Apply lifecycle greeting. Lead with numbers.
 
-1. Net worth + monthly change (headline)
+1. Net worth + MoM change
 2. Allocation table with drift
-3. Crash survival table (3 scenarios: post-crash NW + runway)
-4. Guardrail audit table (with trend column)
+3. Crash survival table
+4. Guardrail audit with trend
 5. Goal progress table
-6. Forward outlook (narrative: key dates, risks, pending decisions)
+6. Forward outlook (narrative)
 7. React dashboard artifact
 
-### Plugin-Aware
-If bitcoin-specific skills available: BTC temperature, conviction framework, BTC-specific crash scenarios.
+**Plugin-Aware:** If `btc-check` command exists: read `references/bitcoin-formulas.md` and add BTC temperature, selling status, and BTC-specific crash scenarios to the monthly review. Otherwise: standard crypto analysis only.
 
-## Output Rules
-- 500-800 words + dashboard artifact
-- Lead with numbers (Speed to Value)
-- Tables for data, narrative for outlook only
-- Reference specific dates and amounts from snapshots
+**Output:** 500-800 words + dashboard. Tables for data, narrative for outlook. Reference specific dates/amounts.

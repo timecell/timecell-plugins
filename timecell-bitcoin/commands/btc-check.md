@@ -1,0 +1,69 @@
+---
+description: Deep Bitcoin analysis — temperature, selling ladder, crash survival, DCA, conviction assessment
+argument-hint: ""
+---
+
+# /tc:btc-check — Bitcoin Intelligence
+
+## Budget: 2-3 tool calls max. Do NOT use WebSearch, ToolSearch, or load skills.
+
+## Step 1: Read + Fetch (1 bash call)
+
+    cat profile.md entities/*.md 2>/dev/null; echo "===BTC_SEP==="; cat references/bitcoin-formulas.md 2>/dev/null; echo "===BTC_SEP==="; cat references/bitcoin-conviction.md 2>/dev/null; echo "===BTC_SEP==="; python3 scripts/fetch-btc-data.py 2>/dev/null; echo "===BTC_SEP==="; cat .timecell/bitcoin/tier-status.md 2>/dev/null; echo "===BTC_SEP==="; cat .timecell/bitcoin/temperature-log.md 2>/dev/null
+
+Returns: profile + entities, bitcoin formulas, conviction framework, live market data (JSON), tier execution history, temperature history.
+
+**If no entities with BTC:** Stop → "No BTC holdings found. Add a bitcoin entity first."
+
+## Step 2: Write State (1 tool call)
+
+Write updated state to `.timecell/bitcoin/`:
+
+**temperature-log.md** — Append one line:
+
+    | YYYY-MM-DD HH:MM | score | zone | source |
+
+**tier-status.md** — Update if any new tiers triggered since last check (respecting 48h sustain rule and 3-point buffer).
+
+Create `.timecell/bitcoin/` directory if it doesn't exist (use `mkdir -p` in the write command).
+
+## Step 3: Respond (0 tool calls)
+
+Compute ALL of the following inline using bitcoin-formulas.md:
+
+### 1. BTC Temperature
+- Composite score (0-100), zone name
+- Trend: compare to last 3 readings from temperature-log.md (up/down/flat arrow)
+- Source attribution (timecell-api / coinmetrics-fallback / manual)
+
+### 2. Selling Status
+- Which tiers are triggered at current temperature
+- Cumulative % to sell, dollar amount (from liquid BTC entities)
+- Distance from floor (50% of original position)
+- 48h sustain status: "confirmed" if sustained, "pending N hours" if recent
+
+### 3. Crash Survival Matrix
+All 5 scenarios from bitcoin-formulas.md:
+- Post-crash portfolio value
+- Post-crash runway months
+- Zone classification (CRITICAL/WARNING/SAFE)
+
+### 4. Deployment Status
+- Current drawdown from ATH (if available from market data)
+- Which deployment tier is active (if in drawdown)
+- Opportunity fund balance and deployable amount
+
+### 5. DCA Recommendation
+- Current temperature to multiplier from table
+- Monthly DCA amount (multiplier x baseline from profile)
+
+### 6. Conviction Assessment
+Frame per bitcoin-conviction.md:
+- Current zone framing language
+- Any belief tensions with user's portfolio state
+- Action items aligned to framework
+
+### 7. React Dashboard Artifact
+Visual summary with temperature gauge, selling ladder status, crash matrix, and DCA recommendation.
+
+**Output rules:** Tables first, bold totals, whole % numbers, comma separators > 999, no emoji. Frame everything through conviction framework.

@@ -5,40 +5,39 @@ argument-hint: ""
 
 # /tc:weekly — Weekly Review
 
+## Budget: 2 tool calls max
 
 ## Pre-Check
-- Need 2+ snapshots for trend comparison. If only 1: redirect to /tc:start with "Let's build a few more snapshots first."
-- If session_count <= 3: redirect to /tc:start with brief explanation.
+Session count = `grep -c "^## [0-9]" memory/session-log.md`.
+- If < 2 snapshots or session_count <= 3: redirect to /tc:start ("Let's build a few more snapshots first.")
 
-## Workflow
+## Step 1: Read All Data (1 bash call)
 
-### Step 1: Read Data
-- All snapshots from past 7-14 days
-- `decisions/` for recent decision entries
-- `memory/session-log.md` for recent activity
-- `profile.md` for context
+```bash
+cat profile.md 2>/dev/null; echo "===SEP==="; cat snapshots/*.md 2>/dev/null | tail -n 200; echo "===SEP==="; cat decisions/*.md 2>/dev/null | tail -n 100; echo "===SEP==="; cat memory/session-log.md 2>/dev/null | tail -n 50
+```
 
-### Step 2: Compute Deltas
-- Net worth change (absolute and %)
+Returns: profile, recent snapshots (past 7-14 days), recent decisions, session log.
+
+## Step 2: Compute Deltas (inline)
+- Net worth change ($ and %)
 - Allocation drift from 7 days ago
 - Guardrail zone changes
-- New entities added or removed
+- New entities
 
-### Step 3: Write Narrative Memo
+## Step 3: Write Memo + Log (1 tool call)
 
-Structure (200-400 words, conversational CIO-to-principal tone):
+Structure (200-400 words, CIO-to-principal tone):
+1. Headline (one sentence)
+2. Portfolio movement (market, transactions, FX)
+3. Guardrail status (zone changes)
+4. Decisions made (reference decisions/)
+5. Looking ahead
 
-1. **Headline** — one-sentence week summary
-2. **Portfolio Movement** — what changed and why (market moves, transactions, FX)
-3. **Guardrail Status** — zone changes this week
-4. **Decisions Made** — reference entries in decisions/
-5. **Looking Ahead** — what to watch next week
-
-### Step 4: Log
 Append to `memory/session-log.md`.
 
 ## Rules
-- NO React dashboard artifact — narrative memo only
-- 200-400 words target
-- Reference specific numbers and dates
-- Conversational tone, not bullet-point summary
+- NO React dashboard — narrative only
+- 200-400 words
+- Specific numbers and dates
+- Conversational, not bullets

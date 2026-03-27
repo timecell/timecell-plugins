@@ -5,60 +5,47 @@ argument-hint: "[optional: specific scenario, e.g. 'BTC drops 50%']"
 
 # /tc:check — Risk Assessment
 
-## Tool Call Budget: 3-4 calls maximum
+## Budget: 3 tool calls max
 
-Read data (1) → fetch rates if needed (0-1) → write snapshot (1) → present (0).
-All stress test computation uses formulas from `references/computation-formulas.md`.
+Read data (1) → write snapshot (1) → present (0). All computation inline.
 
-## Workflow
+## Step 1: Determine Scope
+If user gave specific scenario (e.g., "BTC drops 50%"): model that first, then offer full suite.
+Otherwise: run standard suite (Step 2).
 
-### Step 1: Determine Scope
-If user provided a specific scenario (e.g., "BTC drops 50%"):
-- Model that specific scenario first
-- Then offer: "Want to see the full stress test suite?"
+## Step 2: Stress Test Suite (compute inline)
 
-If no specific scenario: run standard suite (Step 2).
+**Shock scenarios:**
 
-### Step 2: Stress Test Suite
+| Scenario | Equities | Crypto | Property | Cash/FI |
+|----------|----------|--------|----------|---------|
+| Mild | −15% | −20% | 0% | 0% |
+| Severe | −30% | −50% | −10% | 0% |
+| Extended bear | −40% | −60% | −15% | 0% |
 
-| Scenario | Description | Assumptions |
-|----------|-------------|-------------|
-| Market correction | Normal pullback | Equities -20%, crypto -30% |
-| Crypto winter | Crypto-focused drawdown | Crypto -60%, equities -10% |
-| Broad crash | Multi-asset recession | Equities -40%, crypto -50%, property -15% |
-| Income loss | Employment disruption | Zero income for 12 months |
-| Black swan | Tail risk event | Worst asset -80%, all others -20% |
-
-For each scenario, apply the **Crash Survival** formulas from `references/computation-formulas.md`.
+For each: compute post-crash net worth, runway.
 
 **Risk verdict:**
-```
-IF ALL scenarios: post_crash_runway > 24 months → RESILIENT
-ELSE IF severe_crash: post_crash_runway > 12 months → ADEQUATE
-ELSE → FRAGILE
-```
+- RESILIENT: all scenarios → runway > 24mo
+- ADEQUATE: severe crash → runway > 12mo
+- FRAGILE: any scenario breaches critical
 
-### Step 3: Guardrail Audit
-Load `guardrails` skill — full status check.
+## Step 3: Guardrail Audit (inline)
 
-### Step 4: Risk Verdict
-Synthesize into a clear verdict:
-- **RESILIENT** — survives all scenarios with runway > 24 months
-- **ADEQUATE** — survives most but vulnerable to severe scenarios
-- **FRAGILE** — one or more scenarios breach critical thresholds
+Apply thresholds:
+- Runway: CRITICAL < 12mo, WARNING 12-18mo, SAFE 24-36mo, STRONG > 36mo
+- Single entity: CRITICAL > 50%, WARNING > 30%
+- Asset class: CRITICAL > 70%, WARNING > 50%
 
-### Step 5: Present
-Lead with the verdict:
-```
-Risk Verdict: RESILIENT / ADEQUATE / FRAGILE
-```
+## Step 4: Write Snapshot + Present
 
-Then: stress test table, guardrail audit, specific recommendations.
+Write `snapshots/YYYY-MM-DD.md`. Then present:
+1. Risk verdict
+2. Stress test table
+3. Guardrail audit
+4. Recommendations
+5. React dashboard artifact
 
-### Step 6: Generate Dashboard
-React artifact with stress test results and guardrail status visualization.
+**Rules:** Runway impact is key. Frame via framework. Specific scenario first if requested.
 
-## Rules
-- Always show runway impact — this is what matters most
-- Frame recommendations through the framework
-- If specific scenario requested, model that FIRST before offering full suite
+**Plugin-Aware:** If `btc-check` command exists: read `references/bitcoin-formulas.md` and extend stress test suite with the 5 bitcoin-specific crash scenarios (btc_crash_25/50/75, market_crash_20/40). Include BTC temperature context in risk verdict. Otherwise: use standard crypto shock multipliers only.

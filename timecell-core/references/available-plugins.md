@@ -15,12 +15,12 @@
 
 ## How to Detect Add-ons
 
-Check if add-on skills are available at runtime. Do NOT hardcode plugin names in conditionals. Instead:
+Check if add-on commands exist at runtime. Do NOT hardcode plugin names in conditionals. Instead:
 
 ```
-If bitcoin-specific skills are available:
-  Include BTC temperature section
-  Include custody risk status
+If `btc-check` command exists:
+  Read references/bitcoin-formulas.md on demand
+  Include BTC temperature, selling status, crash readiness
 If NOT available:
   Show BTC as regular asset class with standard analysis
 ```

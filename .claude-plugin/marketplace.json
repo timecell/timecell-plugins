@@ -8,6 +8,11 @@
       "name": "timecell",
       "source": "./timecell-core",
       "description": "Family Office OS — your AI CIO. Net worth tracking, allocation analysis, guardrails, and financial planning."
+    },
+    {
+      "name": "timecell-bitcoin",
+      "source": "./timecell-bitcoin",
+      "description": "Bitcoin CIO intelligence — temperature, selling ladder, crash survival, DCA, conviction framework. Requires timecell core."
     }
   ]
 }

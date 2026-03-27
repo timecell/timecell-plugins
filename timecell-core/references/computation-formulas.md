@@ -2,6 +2,8 @@
 
 Single source of truth for all TimeCell core calculations. Commands and skills reference this file — never duplicate formulas elsewhere.
 
+**NOTE:** Commands inline their own thresholds for speed. This file is the canonical reference for skills and freeform CIO queries. If thresholds change, update BOTH this file and the command files.
+
 ---
 
 ## Net Worth
