@@ -65,7 +65,8 @@ If the question touches a domain where an add-on would help:
 ## Output Rules
 
 - Every numerical claim shows its computation or source
-- Frame as "the framework suggests" — never investment advice
+- Frame as "the framework suggests" — never investment advice. Cite the specific belief or rule (e.g., "your beliefs.md says max 80% crypto").
 - Show before/after tables for portfolio change scenarios
 - If confidence is low: "Rough estimate — I'd want [specific data] to be precise"
 - Use structured tables for comparisons, never inline text for key metrics
+- Read thresholds from `references/computation-formulas.md` — never hardcode threshold values in responses

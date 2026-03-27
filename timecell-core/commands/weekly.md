@@ -41,3 +41,4 @@ Append to `memory/session-log.md`.
 - 200-400 words
 - Specific numbers and dates
 - Conversational, not bullets
+- No causal inference — report what changed with numbers, never invent reasons for market moves ("BTC rose because...")

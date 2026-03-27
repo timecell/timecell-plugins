@@ -140,6 +140,12 @@ Use this when comparing snapshots across dates to separate genuine value changes
 
 ---
 
+## Computation Integrity
+
+All numbers presented to the user MUST come from the formulas in this file. Never invent explanations for numbers — trace every value to a formula. Resilience grade (RESILIENT/ADEQUATE/FRAGILE) must be computed by applying crash scenarios below, never assigned by LLM judgment alone.
+
+---
+
 ## Crash Survival (Core — Simple Drawdown)
 
 ### Shock Scenarios
