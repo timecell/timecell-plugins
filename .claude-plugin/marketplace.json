@@ -1,0 +1,13 @@
+{
+  "name": "timecell-plugins",
+  "owner": {
+    "name": "TimeCell"
+  },
+  "plugins": [
+    {
+      "name": "timecell",
+      "source": "./timecell-core",
+      "description": "Family Office OS — your AI CIO. Net worth tracking, allocation analysis, guardrails, runway planning, and financial intelligence."
+    }
+  ]
+}

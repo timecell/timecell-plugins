@@ -1,0 +1,12 @@
+{
+  "name": "timecell",
+  "version": "1.0.0",
+  "description": "Family Office OS — your AI CIO. Net worth tracking, allocation analysis, guardrails, and financial planning.",
+  "author": {
+    "name": "TimeCell",
+    "url": "https://github.com/timecell"
+  },
+  "repository": "https://github.com/timecell/timecell-plugins",
+  "license": "MIT",
+  "keywords": ["family-office", "wealth", "portfolio", "net-worth", "finance", "cio"]
+}

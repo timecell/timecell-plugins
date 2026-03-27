@@ -1,0 +1,32 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cat references/session-start-reminder.md",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "python3 scripts/increment-session-count.py",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 scripts/snapshot-before-write.py \"$FILE_PATH\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}
