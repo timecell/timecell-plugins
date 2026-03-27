@@ -2,6 +2,8 @@
 
 Single source of truth for all TimeCell core calculations. Commands and skills reference this file — never duplicate formulas elsewhere.
 
+**Computation Integrity:** All numbers presented to the user MUST come from formulas in this file. Never invent explanations for numbers — trace every value to its formula.
+
 **NOTE:** Commands inline their own thresholds for speed. This file is the canonical reference for skills and freeform CIO queries. If thresholds change, update BOTH this file and the command files.
 
 ---
@@ -140,12 +142,6 @@ Use this when comparing snapshots across dates to separate genuine value changes
 
 ---
 
-## Computation Integrity
-
-All numbers presented to the user MUST come from the formulas in this file. Never invent explanations for numbers — trace every value to a formula. Resilience grade (RESILIENT/ADEQUATE/FRAGILE) must be computed by applying crash scenarios below, never assigned by LLM judgment alone.
-
----
-
 ## Crash Survival (Core — Simple Drawdown)
 
 ### Shock Scenarios
@@ -162,6 +158,11 @@ FOR each scenario, FOR each entity:
 Compute: post_crash_nw, post_crash_liquid, post_crash_runway
 Apply guardrail zones to post-crash results.
 ```
+
+**Resilience Grade** (from crash survival results):
+- RESILIENT: all scenarios post-crash runway > 24mo
+- ADEQUATE: severe scenario post-crash runway > 12mo
+- FRAGILE: any scenario breaches CRITICAL runway
 
 **Note:** timecell-bitcoin add-on provides a more sophisticated model for BTC-heavy portfolios.
 
