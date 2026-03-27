@@ -1,0 +1,10 @@
+{
+  "agent": {
+    "permissions": {
+      "allow": [
+        "Read", "Write", "Edit", "Glob", "Grep",
+        "Bash(python3 *)"
+      ]
+    }
+  }
+}
