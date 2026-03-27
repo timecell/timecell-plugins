@@ -9,6 +9,7 @@ from urllib.error import URLError
 
 CACHE_TTL = 3600  # 1 hour in seconds
 API_URL = "https://open.er-api.com/v6/latest/USD"
+BTC_API_URL = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
 
 
 def get_cache_path(project_dir):
@@ -29,12 +30,28 @@ def read_cache(cache_path):
     return None
 
 
+def fetch_btc_price():
+    """Fetch BTC/USD price from CoinGecko."""
+    try:
+        req = Request(BTC_API_URL, headers={"User-Agent": "TimeCell/1.0"})
+        with urlopen(req, timeout=10) as resp:
+            data = json.loads(resp.read())
+        return data.get("bitcoin", {}).get("usd")
+    except (URLError, OSError):
+        return None
+
+
 def fetch_rates():
-    """Fetch live rates from API."""
+    """Fetch live rates from API, including BTC/USD."""
     req = Request(API_URL, headers={"User-Agent": "TimeCell/1.0"})
     with urlopen(req, timeout=10) as resp:
         data = json.loads(resp.read())
-    return data.get("rates", {})
+    rates = data.get("rates", {})
+    # Add BTC price (USD per 1 BTC)
+    btc_price = fetch_btc_price()
+    if btc_price:
+        rates["BTC"] = btc_price
+    return rates
 
 
 def get_exchange_rates(project_dir="."):
