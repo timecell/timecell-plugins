@@ -5,7 +5,6 @@ argument-hint: "[optional: specific scenario, e.g. 'BTC drops 50%']"
 
 # /tc:check — Risk Assessment
 
-Read `references/timecell.md` and follow the CIO persona.
 
 ## Workflow
 

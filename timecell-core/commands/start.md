@@ -5,7 +5,6 @@ argument-hint: ""
 
 # /tc:start — Portfolio Health Check
 
-Read `references/timecell.md` and follow the CIO persona.
 
 ## Pre-Checks
 1. Run `python3 scripts/check-snapshot-staleness.py` — note result

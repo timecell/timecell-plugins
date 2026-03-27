@@ -5,7 +5,6 @@ argument-hint: ""
 
 # /tc:weekly — Weekly Review
 
-Read `references/timecell.md` and follow the CIO persona.
 
 ## Pre-Check
 - Need 2+ snapshots for trend comparison. If only 1: redirect to /tc:start with "Let's build a few more snapshots first."

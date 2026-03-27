@@ -5,7 +5,6 @@ argument-hint: ""
 
 # /tc:monthly — Monthly Review
 
-Read `references/timecell.md` and follow the CIO persona.
 
 ## Pre-Check
 - Need 2+ weeks of snapshots. If insufficient: run /tc:start instead.

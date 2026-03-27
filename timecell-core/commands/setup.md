@@ -5,7 +5,6 @@ argument-hint: ""
 
 # /tc:setup — Family Office Setup
 
-Read `references/timecell.md` and follow the CIO persona throughout this conversation.
 
 ## Pre-Check
 
