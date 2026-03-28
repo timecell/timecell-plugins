@@ -1,5 +1,7 @@
 # TimeCell Plugins
 
+[![Plugin Tests](https://github.com/timecell/timecell-plugins/actions/workflows/test.yml/badge.svg)](https://github.com/timecell/timecell-plugins/actions/workflows/test.yml)
+
 Family Office OS — AI-powered financial intelligence for family office principals.
 
 ## Plugins
