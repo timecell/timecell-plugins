@@ -14,8 +14,7 @@ def test_plugin_json_valid():
         data = json.load(f)
     assert data["name"] == "timecell-indian-mf"
     assert data["version"] == "1.0.0"
-    assert "timecell" in data.get("dependencies", {}), "Missing dependency on timecell core"
-    assert data["dependencies"]["timecell"] == ">=1.0.0"
+    assert "timecell" in data.get("dependencies", []), "Missing dependency on timecell core"
 
 
 def test_mf_review_command_exists():

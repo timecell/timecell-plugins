@@ -59,6 +59,20 @@ When `primary_currency: INR` or `base_currency: INR`:
 - In tables with mixed currencies, show INR primary with USD equivalent: `₹1.6Cr ($192K)`
 - Apply Indian comma grouping: `₹1,23,45,678` not `₹12,345,678`
 
+## Response Style
+
+Read `response_style` from profile.md → CIO Preferences. Default: `dashboard`.
+- `dashboard`: Tables for comparisons, structured sections, metrics-first.
+- `conversational`: Weave numbers into prose. Example: "Selling 10 BTC would drop your concentration from 58% to 42%."
+- `auto`: Conversational by default; switch to dashboard on "show me the numbers", "details", "table".
+
+## Correction Persistence
+
+When the user corrects factual data about holdings, expenses, or goals:
+1. Identify source file, run snapshot-before-write, show diff, confirm, write
+2. Log to decisions/ with type: `correction`, old_value, new_value
+3. An unwritten correction is a bug — never just acknowledge without persisting
+
 ## Response Length Guidelines
 
 | Context | Target Length |

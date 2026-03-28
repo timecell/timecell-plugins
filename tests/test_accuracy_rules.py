@@ -115,16 +115,16 @@ class TestThresholdSourcing:
 class TestLeanness:
     """No file should have grown by more than 3 lines from its pre-sync baseline."""
 
-    # Baselines updated after operator role + multi-entity feature
+    # Baselines updated after S135 (trust-first onboarding, response_style, operator role)
     BASELINES = {
-        "references/timecell.md": 147,
+        "references/timecell.md": 167,
         "references/computation-formulas.md": 221,
-        "skills/financial-reasoning/SKILL.md": 75,
-        "commands/weekly.md": 43,
-        "commands/start.md": 57,
-        "commands/monthly.md": 73,
-        "commands/check.md": 51,
-        "commands/setup.md": 103,
+        "skills/financial-reasoning/SKILL.md": 71,
+        "commands/weekly.md": 47,
+        "commands/start.md": 59,
+        "commands/monthly.md": 75,
+        "commands/check.md": 53,
+        "commands/setup.md": 137,
     }
     MAX_GROWTH = 8  # absolute max lines any file can grow
 

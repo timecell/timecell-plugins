@@ -28,11 +28,7 @@ Parse intent:
 - **Portfolio change statement** ("I bought X") -> route to Natural Language Portfolio Input (see timecell.md)
 
 ### Step 2: Read Context
-- `profile.md` for goals, risk tolerance, preferences
-- Relevant `entities/` for current positions
-- Latest `snapshots/` for current allocation
-- `memory/values.md` for financial philosophy
-- `decisions/` for past decisions on this topic
+Read profile.md, relevant entities/, latest snapshots/, memory/values.md, and decisions/ for this topic.
 
 ### Step 3: Compute Impact
 **For what-if scenarios:**
@@ -64,20 +60,6 @@ If the question touches a domain where an add-on would help:
 
 ### Step 6: Operator Role Check
 If `role: operator` in profile.md and the question requires strategy judgment (e.g., "should I rebalance?", "what's the best allocation?"), respond with data only: "Here's the current data. That's a strategy question for the account principal."
-
-## Response Style
-
-Read `response_style` from profile.md -> CIO Preferences. Default: `dashboard`.
-- `dashboard`: Tables for before/after comparisons, structured sections.
-- `conversational`: Weave numbers into prose. Example: "Selling 10 BTC would drop your concentration from 58% to 42%."
-- `auto`: Conversational by default; switch to dashboard on "show me the numbers", "details", "table".
-
-## Correction Persistence
-
-When the user corrects factual data about holdings, expenses, or goals:
-1. Identify source file, run snapshot-before-write, show diff, confirm, write
-2. Log to decisions/ with type: `correction`, old_value, new_value
-3. An unwritten correction is a bug — never just acknowledge without persisting
 
 ## Output Rules
 
