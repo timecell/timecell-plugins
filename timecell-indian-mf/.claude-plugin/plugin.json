@@ -1,0 +1,15 @@
+{
+  "name": "timecell-indian-mf",
+  "version": "1.0.0",
+  "description": "Indian mutual fund intelligence — SEBI classification, NAV tracking, underperformer detection, SIP/XIRR, Zerodha integration",
+  "author": {
+    "name": "TimeCell",
+    "url": "https://github.com/timecell"
+  },
+  "repository": "https://github.com/timecell/timecell-plugins",
+  "license": "MIT",
+  "keywords": ["india", "mutual-fund", "sebi", "sip", "elss", "zerodha", "family-office"],
+  "dependencies": {
+    "timecell": ">=1.0.0"
+  }
+}

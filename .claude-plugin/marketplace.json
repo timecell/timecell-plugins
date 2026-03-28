@@ -13,6 +13,11 @@
       "name": "timecell-bitcoin",
       "source": "./timecell-bitcoin",
       "description": "Bitcoin CIO intelligence — temperature, selling ladder, crash survival, DCA, conviction framework. Requires timecell core."
+    },
+    {
+      "name": "timecell-indian-mf",
+      "source": "./timecell-indian-mf",
+      "description": "Indian mutual fund intelligence — SEBI classification, NAV tracking, underperformer detection, SIP/XIRR, Zerodha integration. Requires timecell core."
     }
   ]
 }
