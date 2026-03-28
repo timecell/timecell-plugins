@@ -6,57 +6,36 @@
     "name": "TimeCell",
     "email": "sandeep@timecell.dev"
   },
+  "metadata": {
+    "pluginRoot": "."
+  },
   "plugins": [
     {
       "name": "timecell",
       "description": "Family Office OS — your AI CIO. Net worth tracking, allocation analysis, guardrails, and financial planning.",
       "category": "finance",
-      "source": {
-        "source": "git-subdir",
-        "url": "timecell/timecell-plugins",
-        "path": "timecell-core",
-        "ref": "main",
-        "sha": "f7502445630079331a62f0f610ef3659d5ffa4c9"
-      },
+      "source": "./timecell-core",
       "homepage": "https://github.com/timecell/timecell-plugins"
     },
     {
       "name": "timecell-bitcoin",
-      "description": "Bitcoin CIO intelligence — temperature, selling ladder, crash survival, DCA, conviction framework. Requires timecell core.",
+      "description": "Bitcoin CIO intelligence — temperature, selling ladder, crash survival, hedge engine, conviction framework. Requires timecell core.",
       "category": "finance",
-      "source": {
-        "source": "git-subdir",
-        "url": "timecell/timecell-plugins",
-        "path": "timecell-bitcoin",
-        "ref": "main",
-        "sha": "f7502445630079331a62f0f610ef3659d5ffa4c9"
-      },
+      "source": "./timecell-bitcoin",
       "homepage": "https://github.com/timecell/timecell-plugins"
     },
     {
       "name": "timecell-indian-mf",
       "description": "Indian mutual fund intelligence — SEBI classification, NAV tracking, underperformer detection, SIP/XIRR, Zerodha integration. Requires timecell core.",
       "category": "finance",
-      "source": {
-        "source": "git-subdir",
-        "url": "timecell/timecell-plugins",
-        "path": "timecell-indian-mf",
-        "ref": "main",
-        "sha": "f7502445630079331a62f0f610ef3659d5ffa4c9"
-      },
+      "source": "./timecell-indian-mf",
       "homepage": "https://github.com/timecell/timecell-plugins"
     },
     {
       "name": "timecell-estate",
       "description": "Estate planning, succession, trust tracking, key packages, custody audit, document registry. Requires timecell core.",
       "category": "finance",
-      "source": {
-        "source": "git-subdir",
-        "url": "timecell/timecell-plugins",
-        "path": "timecell-estate",
-        "ref": "main",
-        "sha": "f7502445630079331a62f0f610ef3659d5ffa4c9"
-      },
+      "source": "./timecell-estate",
       "homepage": "https://github.com/timecell/timecell-plugins"
     }
   ]
