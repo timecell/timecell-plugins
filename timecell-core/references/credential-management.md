@@ -40,17 +40,17 @@ Any string works as a service name. Recommended naming:
 
 **Encryption:** If `cryptography` Python package is installed, uses Fernet (AES-128-CBC + HMAC-SHA256). Otherwise falls back to PBKDF2-derived XOR stream cipher with HMAC-SHA256 integrity verification. Both backends are tagged in the ciphertext — upgrading to Fernet later works without re-entry.
 
-**Key storage:** Master key auto-generated on first use. Stored at `.timecell/.key` with 0600 permissions (owner-only). No passphrase required — the threat model is local file access protection, not remote attack resistance.
+**Key storage:** Master key auto-generated on first use. Stored in the data directory (`${CLAUDE_PLUGIN_DATA}` if set, otherwise `.timecell/`) as `.key` with 0600 permissions (owner-only). No passphrase required — the threat model is local file access protection, not remote attack resistance.
 
-**File permissions:** Both `.timecell/.key` and `.timecell/credentials.enc` are set to mode 0600.
+**File permissions:** Both `.key` and `credentials.enc` in the data directory are set to mode 0600.
 
-**Update safety:** `.timecell/` is in USER_DATA_PATHS — credentials survive plugin updates.
+**Update safety:** Data directory is protected — credentials survive plugin updates. When running as a Cowork marketplace plugin, `${CLAUDE_PLUGIN_DATA}` provides automatic persistence. For project-files installs, `.timecell/` is in USER_DATA_PATHS.
 
 **Limitation:** The stdlib fallback (XOR + HMAC) provides integrity verification and obfuscation but is not equivalent to AES. For high-security environments, install `cryptography`: `pip install cryptography`.
 
 ## CIO Behavior
 
-- When a user shares an API key in conversation, store it and confirm: "Stored your [service] API key securely in .timecell/credentials.enc."
+- When a user shares an API key in conversation, store it and confirm: "Stored your [service] API key securely."
 - Never echo credential values back to the user after storage.
 - When a fetch script needs credentials, retrieve them programmatically — do not ask the user to paste keys again.
 - On `list`, show service names and storage dates only.

@@ -42,8 +42,16 @@ def _project_root() -> Path:
 
 
 def _timecell_dir(project_root: Path) -> Path:
-    """Return .timecell/ directory, creating if needed."""
-    d = project_root / ".timecell"
+    """Return persistent data directory, creating if needed.
+
+    Checks ${CLAUDE_PLUGIN_DATA} first (Cowork marketplace),
+    falls back to <project_root>/.timecell/ for project-files installs.
+    """
+    plugin_data = os.environ.get("CLAUDE_PLUGIN_DATA")
+    if plugin_data:
+        d = Path(plugin_data)
+    else:
+        d = project_root / ".timecell"
     d.mkdir(parents=True, exist_ok=True)
     return d
 

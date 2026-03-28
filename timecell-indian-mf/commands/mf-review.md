@@ -18,13 +18,13 @@ argument-hint: ""
 
 ## Step 1: Read + Fetch (1 bash call)
 
-    cat profile.md entities/*.md 2>/dev/null; echo "===MF_SEP==="; cat references/mf-computation-formulas.md 2>/dev/null; echo "===MF_SEP==="; cat references/mf-category-classification.md 2>/dev/null; echo "===MF_SEP==="; cat references/indian-entity-types.md 2>/dev/null; echo "===MF_SEP==="; cat references/inr-formatting.md 2>/dev/null; echo "===MF_SEP==="; cat references/mf-review-workflow.md 2>/dev/null; echo "===MF_SEP==="; python3 scripts/fetch-mf-data.py 2>/dev/null; echo "===MF_SEP==="; python3 scripts/fetch-zerodha-data.py --mf-only 2>/dev/null; echo "===MF_SEP==="; cat .timecell/indian-mf/category-snapshot.json 2>/dev/null; echo "===MF_SEP==="; cat .timecell/indian-mf/underperformer-log.md 2>/dev/null; echo "===MF_SEP==="; cat .claude/timecell-indian-mf.local.md 2>/dev/null
+    TC_DATA="${CLAUDE_PLUGIN_DATA:-.timecell}"; cat profile.md entities/*.md 2>/dev/null; echo "===MF_SEP==="; cat references/mf-computation-formulas.md 2>/dev/null; echo "===MF_SEP==="; cat references/mf-category-classification.md 2>/dev/null; echo "===MF_SEP==="; cat references/indian-entity-types.md 2>/dev/null; echo "===MF_SEP==="; cat references/inr-formatting.md 2>/dev/null; echo "===MF_SEP==="; cat references/mf-review-workflow.md 2>/dev/null; echo "===MF_SEP==="; python3 scripts/fetch-mf-data.py 2>/dev/null; echo "===MF_SEP==="; python3 scripts/fetch-zerodha-data.py --mf-only 2>/dev/null; echo "===MF_SEP==="; cat "$TC_DATA/indian-mf/category-snapshot.json" 2>/dev/null; echo "===MF_SEP==="; cat "$TC_DATA/indian-mf/underperformer-log.md" 2>/dev/null; echo "===MF_SEP==="; cat .claude/timecell-indian-mf.local.md 2>/dev/null
 
 **If no MF holdings found in profile or Zerodha:** Stop -> "No mutual fund holdings found. Add MF schemes to your profile or connect Zerodha."
 
 ## Step 2: Write State (1 tool call)
 
-Write updated state to `.timecell/indian-mf/`:
+Write updated state to the data directory (`${CLAUDE_PLUGIN_DATA}` or `.timecell/`) under `indian-mf/`:
 
 **category-snapshot.json** — Current category allocation snapshot:
 
@@ -34,7 +34,7 @@ Write updated state to `.timecell/indian-mf/`:
 
     | YYYY-MM-DD | scheme_name | 1Y_return | category_avg | delta | severity |
 
-Create `.timecell/indian-mf/` directory if it doesn't exist (use `mkdir -p` in the write command).
+Create the MF data directory if it doesn't exist: `mkdir -p "${CLAUDE_PLUGIN_DATA:-.timecell}/indian-mf"`
 
 ## Step 3: Respond (0 tool calls)
 

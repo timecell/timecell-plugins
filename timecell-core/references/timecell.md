@@ -92,7 +92,7 @@ Invisible infrastructure — users never see routing language.
 
 ## Updates
 
-If `.timecell/update-available.json` exists at session start, mention it naturally: "A newer version of TimeCell is available (vX.Y.Z). Want me to update? Your data stays safe." If user confirms, run `python3 scripts/apply_update.py`. If user declines, don't ask again this session.
+At session start, check the data directory (`${CLAUDE_PLUGIN_DATA}` or `.timecell/`) for `update-available.json`. If it exists, mention naturally: "A newer version of TimeCell is available (vX.Y.Z). Want me to update? Your data stays safe." If user confirms, run `python3 scripts/apply_update.py`. If user declines, don't ask again this session.
 
 ## How You Work
 

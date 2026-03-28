@@ -47,6 +47,21 @@ GITHUB_REPO = "timecell/timecell-plugins"
 HTTP_TIMEOUT = 30  # longer timeout for download
 
 
+def _data_dir(project_root: Path) -> Path:
+    """Return persistent data directory, creating if needed.
+
+    Checks ${CLAUDE_PLUGIN_DATA} first (Cowork marketplace),
+    falls back to <project_root>/.timecell/ for project-files installs.
+    """
+    plugin_data = os.environ.get("CLAUDE_PLUGIN_DATA")
+    if plugin_data:
+        d = Path(plugin_data)
+    else:
+        d = project_root / ".timecell"
+    d.mkdir(parents=True, exist_ok=True)
+    return d
+
+
 def _project_root() -> Path:
     """Find project root by walking up from script location."""
     script_dir = Path(__file__).resolve().parent
@@ -87,8 +102,8 @@ def _is_protected(rel_path: str) -> bool:
 
 
 def _get_release_info(project_root: Path) -> dict | None:
-    """Read update-available.json marker."""
-    marker = project_root / ".timecell" / "update-available.json"
+    """Read update-available.json marker from data dir."""
+    marker = _data_dir(project_root) / "update-available.json"
     if not marker.exists():
         return None
     try:
@@ -254,13 +269,13 @@ def apply_update(project_root: Path | None = None) -> dict:
             version_path.write_text(new_version + "\n")
 
     # Delete update marker
-    marker = root / ".timecell" / "update-available.json"
+    data_dir = _data_dir(root)
+    marker = data_dir / "update-available.json"
     if marker.exists():
         marker.unlink()
 
     # Log the update
-    log_file = root / ".timecell" / "install-log.txt"
-    log_file.parent.mkdir(parents=True, exist_ok=True)
+    log_file = data_dir / "install-log.txt"
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with open(log_file, "a") as f:
         f.write(f"{timestamp} — updated timecell v{old_version} -> v{new_version} "

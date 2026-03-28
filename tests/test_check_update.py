@@ -188,3 +188,28 @@ class TestCheckUpdate:
         mock_fetch.side_effect = RuntimeError("unexpected")
         result = check_update.check_update(project_dir)
         assert result is None  # fail-open, no crash
+
+
+# --- CLAUDE_PLUGIN_DATA env var ---
+
+class TestPluginDataEnvVar:
+    @patch("check_update._fetch_latest_version")
+    def test_uses_plugin_data_dir(self, mock_fetch, tmp_path):
+        """When CLAUDE_PLUGIN_DATA is set, markers go there."""
+        plugin_data_dir = tmp_path / "plugin-data"
+        plugin_data_dir.mkdir()
+        project_dir = tmp_path / "project"
+        project_dir.mkdir()
+        (project_dir / "profile.md").write_text("Name: Test\n")
+        refs = project_dir / "references"
+        refs.mkdir()
+        (refs / "version.txt").write_text("2.0.1\n")
+
+        mock_fetch.return_value = ("2.1.0", "https://github.com/test/releases/v2.1.0")
+
+        with patch.dict(os.environ, {"CLAUDE_PLUGIN_DATA": str(plugin_data_dir)}):
+            result = check_update.check_update(project_dir)
+            assert result is not None
+            # Marker should be in plugin_data_dir, not project/.timecell/
+            assert (plugin_data_dir / "update-available.json").exists()
+            assert not (project_dir / ".timecell" / "update-available.json").exists()

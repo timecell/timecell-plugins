@@ -3,7 +3,8 @@
 TimeCell Credential Manager — secure local credential storage.
 
 Stores API keys and secrets for integrations (IBKR, Zerodha, Deribit, etc.)
-in .timecell/credentials.enc with encryption.
+with encryption. Uses ${CLAUDE_PLUGIN_DATA} if set (Cowork marketplace),
+falls back to .timecell/credentials.enc for project-files installs.
 
 Security model:
 - If `cryptography` package is available: uses Fernet (AES-128-CBC + HMAC-SHA256)
@@ -127,18 +128,29 @@ def decrypt(ciphertext: bytes, key: bytes) -> bytes:
 
 # --- Key management ---
 
+def _data_dir(project_dir: str) -> str:
+    """Return persistent data directory.
+
+    Checks ${CLAUDE_PLUGIN_DATA} first (set by Cowork for marketplace plugins),
+    falls back to <project_dir>/.timecell/ for project-files installs.
+    """
+    plugin_data = os.environ.get("CLAUDE_PLUGIN_DATA")
+    if plugin_data:
+        return plugin_data
+    return os.path.join(project_dir, ".timecell")
+
+
 def _key_path(project_dir: str) -> str:
-    return os.path.join(project_dir, ".timecell", ".key")
+    return os.path.join(_data_dir(project_dir), ".key")
 
 
 def _cred_path(project_dir: str) -> str:
-    return os.path.join(project_dir, ".timecell", "credentials.enc")
+    return os.path.join(_data_dir(project_dir), "credentials.enc")
 
 
 def _ensure_dir(project_dir: str):
-    """Ensure .timecell directory exists with proper permissions."""
-    tc_dir = os.path.join(project_dir, ".timecell")
-    os.makedirs(tc_dir, exist_ok=True)
+    """Ensure data directory exists with proper permissions."""
+    os.makedirs(_data_dir(project_dir), exist_ok=True)
 
 
 def _set_file_permissions(path: str):
@@ -150,7 +162,7 @@ def _set_file_permissions(path: str):
 
 
 def get_or_create_key(project_dir: str) -> bytes:
-    """Load master key from .timecell/.key, or generate one on first use."""
+    """Load master key from data dir .key, or generate one on first use."""
     _ensure_dir(project_dir)
     kp = _key_path(project_dir)
 

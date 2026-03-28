@@ -266,7 +266,7 @@ class TestUpdateSurvival:
         assert val == "test-api-key-123"
 
     def test_timecell_dir_in_user_data(self, populated_store):
-        """Verify .timecell/ exists and contains credential files."""
+        """Verify data dir exists and contains credential files."""
         tc_dir = populated_store / ".timecell"
         assert tc_dir.is_dir()
         assert (tc_dir / ".key").exists()
@@ -285,6 +285,39 @@ class TestUpdateSurvival:
         # After "update", credentials should still work
         restored_val = credential_manager.get_credential(str(populated_store), "ibkr")
         assert restored_val == ibkr_val
+
+
+# --- CLAUDE_PLUGIN_DATA env var ---
+
+class TestPluginDataEnvVar:
+    def test_uses_plugin_data_when_set(self, tmp_path):
+        """When CLAUDE_PLUGIN_DATA is set, credentials go there instead of .timecell/."""
+        plugin_data_dir = tmp_path / "plugin-data"
+        plugin_data_dir.mkdir()
+        project_dir = tmp_path / "project"
+        project_dir.mkdir()
+
+        with patch.dict(os.environ, {"CLAUDE_PLUGIN_DATA": str(plugin_data_dir)}):
+            credential_manager.store_credential(str(project_dir), "test-svc", "my-key")
+            # Key and cred files should be in plugin_data_dir, NOT project/.timecell/
+            assert (plugin_data_dir / ".key").exists()
+            assert (plugin_data_dir / "credentials.enc").exists()
+            assert not (project_dir / ".timecell" / ".key").exists()
+            # Retrieve should work
+            val = credential_manager.get_credential(str(project_dir), "test-svc")
+            assert val == "my-key"
+
+    def test_fallback_without_env_var(self, tmp_path):
+        """Without CLAUDE_PLUGIN_DATA, falls back to .timecell/."""
+        project_dir = tmp_path / "project"
+        project_dir.mkdir()
+
+        with patch.dict(os.environ, {}, clear=False):
+            # Ensure CLAUDE_PLUGIN_DATA is not set
+            os.environ.pop("CLAUDE_PLUGIN_DATA", None)
+            credential_manager.store_credential(str(project_dir), "test-svc", "my-key")
+            assert (project_dir / ".timecell" / ".key").exists()
+            assert (project_dir / ".timecell" / "credentials.enc").exists()
 
 
 # --- CLI ---

@@ -5,7 +5,7 @@ Fetch Zerodha/Kite Connect data for indian-mf plugin consumption.
 Fetches equity holdings, MF holdings, positions, and SIP details
 via Kite Connect API v3.
 
-Plugin version for timecell-indian-mf. Cache path: .timecell/indian-mf/zerodha-data.json
+Plugin version for timecell-indian-mf. Cache path: ${CLAUDE_PLUGIN_DATA}/indian-mf/ or .timecell/indian-mf/
 Project dir from TIMECELL_PROJECT_DIR env var or current working directory.
 
 Usage:
@@ -43,7 +43,21 @@ RATE_LIMIT_DELAY = 0.34  # ~3 requests/second
 
 # Project-dir-aware paths (plugin pattern)
 PROJECT_DIR = os.environ.get("TIMECELL_PROJECT_DIR", os.getcwd())
-CACHE_DIR = os.path.join(PROJECT_DIR, ".timecell", "indian-mf")
+
+
+def _data_dir():
+    """Return persistent data directory.
+
+    Checks ${CLAUDE_PLUGIN_DATA} first (Cowork marketplace),
+    falls back to <PROJECT_DIR>/.timecell/ for project-files installs.
+    """
+    plugin_data = os.environ.get("CLAUDE_PLUGIN_DATA")
+    if plugin_data:
+        return plugin_data
+    return os.path.join(PROJECT_DIR, ".timecell")
+
+
+CACHE_DIR = os.path.join(_data_dir(), "indian-mf")
 CACHE_FILE = os.path.join(CACHE_DIR, "zerodha-data.json")
 
 

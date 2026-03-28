@@ -5,7 +5,7 @@ Fetch Indian Mutual Fund NAV data from AMFI via mfapi.in.
 Primary: mfapi.in (free, zero-config, no API key)
 Fallback: manual_input_needed flag
 
-Plugin version for timecell-indian-mf. Cache path: .timecell/indian-mf/mf-nav-data.json
+Plugin version for timecell-indian-mf. Cache path: ${CLAUDE_PLUGIN_DATA}/indian-mf/ or .timecell/indian-mf/
 Project dir from TIMECELL_PROJECT_DIR env var or current working directory.
 
 Usage:
@@ -38,7 +38,21 @@ MAX_SCHEMES_PER_FETCH = 50     # safety limit
 
 # Project-dir-aware paths (plugin pattern)
 PROJECT_DIR = os.environ.get("TIMECELL_PROJECT_DIR", os.getcwd())
-CACHE_DIR = os.path.join(PROJECT_DIR, ".timecell", "indian-mf")
+
+
+def _data_dir():
+    """Return persistent data directory.
+
+    Checks ${CLAUDE_PLUGIN_DATA} first (Cowork marketplace),
+    falls back to <PROJECT_DIR>/.timecell/ for project-files installs.
+    """
+    plugin_data = os.environ.get("CLAUDE_PLUGIN_DATA")
+    if plugin_data:
+        return plugin_data
+    return os.path.join(PROJECT_DIR, ".timecell")
+
+
+CACHE_DIR = os.path.join(_data_dir(), "indian-mf")
 CACHE_FILE = os.path.join(CACHE_DIR, "mf-nav-data.json")
 
 # Profile search paths (Cowork plugin context)

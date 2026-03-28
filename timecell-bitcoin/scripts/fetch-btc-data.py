@@ -39,8 +39,20 @@ REQUEST_TIMEOUT = 15          # seconds per request
 # ---------------------------------------------------------------------------
 # Cache path (project-dir aware)
 # ---------------------------------------------------------------------------
+def _data_dir(project_dir):
+    """Return persistent data directory.
+
+    Checks ${CLAUDE_PLUGIN_DATA} first (Cowork marketplace),
+    falls back to <project_dir>/.timecell/ for project-files installs.
+    """
+    plugin_data = os.environ.get("CLAUDE_PLUGIN_DATA")
+    if plugin_data:
+        return plugin_data
+    return os.path.join(project_dir, ".timecell")
+
+
 def get_cache_path(project_dir):
-    cache_dir = os.path.join(project_dir, ".timecell", "bitcoin")
+    cache_dir = os.path.join(_data_dir(project_dir), "bitcoin")
     os.makedirs(cache_dir, exist_ok=True)
     return os.path.join(cache_dir, "market-data.json")
 

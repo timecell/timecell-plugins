@@ -115,7 +115,7 @@ Create `profile.md`:
 ```
 
 Create empty directories: `snapshots/`, `decisions/`, `memory/`.
-Create `.timecell/` directory for config and cache.
+Create data directory for config and cache: `mkdir -p "${CLAUDE_PLUGIN_DATA:-.timecell}"`
 
 Run `python3 scripts/validate-profile.py profile.md` to verify the profile is valid.
 

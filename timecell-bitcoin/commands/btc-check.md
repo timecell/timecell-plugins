@@ -17,7 +17,7 @@ argument-hint: ""
 
 ## Step 1: Read + Fetch (1 bash call)
 
-    cat profile.md entities/*.md 2>/dev/null; echo "===BTC_SEP==="; cat references/bitcoin-formulas.md 2>/dev/null; echo "===BTC_SEP==="; cat references/bitcoin-conviction.md 2>/dev/null; echo "===BTC_SEP==="; cat references/hedge-formulas.md 2>/dev/null; echo "===BTC_SEP==="; python3 scripts/fetch-btc-data.py 2>/dev/null; echo "===BTC_SEP==="; cat .timecell/bitcoin/tier-status.md 2>/dev/null; echo "===BTC_SEP==="; cat .timecell/bitcoin/temperature-log.md 2>/dev/null; echo "===BTC_SEP==="; cat .claude/timecell-bitcoin.local.md 2>/dev/null
+    TC_DATA="${CLAUDE_PLUGIN_DATA:-.timecell}"; cat profile.md entities/*.md 2>/dev/null; echo "===BTC_SEP==="; cat references/bitcoin-formulas.md 2>/dev/null; echo "===BTC_SEP==="; cat references/bitcoin-conviction.md 2>/dev/null; echo "===BTC_SEP==="; cat references/hedge-formulas.md 2>/dev/null; echo "===BTC_SEP==="; python3 scripts/fetch-btc-data.py 2>/dev/null; echo "===BTC_SEP==="; cat "$TC_DATA/bitcoin/tier-status.md" 2>/dev/null; echo "===BTC_SEP==="; cat "$TC_DATA/bitcoin/temperature-log.md" 2>/dev/null; echo "===BTC_SEP==="; cat .claude/timecell-bitcoin.local.md 2>/dev/null
 
 Returns: profile + entities, bitcoin formulas, conviction framework, hedge formulas, live market data (JSON), tier execution history, temperature history.
 
@@ -25,7 +25,7 @@ Returns: profile + entities, bitcoin formulas, conviction framework, hedge formu
 
 ## Step 2: Write State (1 tool call)
 
-Write updated state to `.timecell/bitcoin/`:
+Write updated state to the data directory (`${CLAUDE_PLUGIN_DATA}` or `.timecell/`) under `bitcoin/`:
 
 **temperature-log.md** — Append one line:
 
@@ -33,7 +33,7 @@ Write updated state to `.timecell/bitcoin/`:
 
 **tier-status.md** — Update if any new tiers triggered since last check (respecting 48h sustain rule and 3-point buffer).
 
-Create `.timecell/bitcoin/` directory if it doesn't exist (use `mkdir -p` in the write command).
+Create the bitcoin data directory if it doesn't exist: `mkdir -p "${CLAUDE_PLUGIN_DATA:-.timecell}/bitcoin"`
 
 ## Step 3: Respond (0 tool calls)
 

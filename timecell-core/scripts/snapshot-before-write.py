@@ -14,6 +14,18 @@ def should_backup(file_path):
     return any(pattern in normalized for pattern in PROTECTED_PATTERNS)
 
 
+def _data_dir(project_dir):
+    """Return persistent data directory.
+
+    Checks ${CLAUDE_PLUGIN_DATA} first (Cowork marketplace),
+    falls back to <project_dir>/.timecell/ for project-files installs.
+    """
+    plugin_data = os.environ.get("CLAUDE_PLUGIN_DATA")
+    if plugin_data:
+        return plugin_data
+    return os.path.join(project_dir, ".timecell")
+
+
 def find_project_root(file_path):
     """Walk up from file to find project root (has .timecell/ or profile.md)."""
     current = os.path.dirname(os.path.abspath(file_path))
@@ -35,7 +47,7 @@ def snapshot_before_write(file_path):
         return None
 
     project_dir = find_project_root(file_path)
-    backup_dir = os.path.join(project_dir, ".timecell", "backups")
+    backup_dir = os.path.join(_data_dir(project_dir), "backups")
     os.makedirs(backup_dir, exist_ok=True)
 
     timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")

@@ -12,8 +12,20 @@ API_URL = "https://open.er-api.com/v6/latest/USD"
 BTC_API_URL = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
 
 
+def _data_dir(project_dir):
+    """Return persistent data directory.
+
+    Checks ${CLAUDE_PLUGIN_DATA} first (Cowork marketplace),
+    falls back to <project_dir>/.timecell/ for project-files installs.
+    """
+    plugin_data = os.environ.get("CLAUDE_PLUGIN_DATA")
+    if plugin_data:
+        return plugin_data
+    return os.path.join(project_dir, ".timecell")
+
+
 def get_cache_path(project_dir):
-    cache_dir = os.path.join(project_dir, ".timecell", "cache")
+    cache_dir = os.path.join(_data_dir(project_dir), "cache")
     os.makedirs(cache_dir, exist_ok=True)
     return os.path.join(cache_dir, "exchange-rates.json")
 

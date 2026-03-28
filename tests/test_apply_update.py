@@ -317,3 +317,43 @@ class TestUserDataPathsCompleteness:
                 f"REGRESSION: '{path}' was removed from USER_DATA_PATHS! "
                 f"This would cause user data loss during updates."
             )
+
+
+# --- CLAUDE_PLUGIN_DATA env var ---
+
+class TestPluginDataEnvVar:
+    @patch("apply_update._download_release_zip")
+    def test_uses_plugin_data_dir(self, mock_download, tmp_path):
+        """When CLAUDE_PLUGIN_DATA is set, markers and logs go there."""
+        plugin_data_dir = tmp_path / "plugin-data"
+        plugin_data_dir.mkdir()
+
+        root = tmp_path / "project"
+        root.mkdir()
+        (root / "profile.md").write_text("Name: Test\n")
+        claude_dir = root / ".claude"
+        claude_dir.mkdir()
+        (claude_dir / "commands").mkdir()
+        (claude_dir / "references").mkdir()
+        (claude_dir / "references" / "version.txt").write_text("2.0.1\n")
+        (root / "references").mkdir()
+        (root / "references" / "version.txt").write_text("2.0.1\n")
+
+        # Put marker in plugin_data_dir
+        (plugin_data_dir / "update-available.json").write_text(json.dumps({
+            "current": "2.0.1",
+            "latest": "2.1.0",
+            "checked_at": "2026-03-27T10:00:00Z",
+            "release_url": "",
+        }))
+
+        zip_data = _make_release_zip({"commands/start.md": "new start"})
+        mock_download.return_value = zip_data
+
+        with patch.dict(os.environ, {"CLAUDE_PLUGIN_DATA": str(plugin_data_dir)}):
+            result = apply_update.apply_update(root)
+            assert result["success"] is True
+            # Marker should be deleted from plugin_data_dir
+            assert not (plugin_data_dir / "update-available.json").exists()
+            # Install log should be in plugin_data_dir
+            assert (plugin_data_dir / "install-log.txt").exists()
