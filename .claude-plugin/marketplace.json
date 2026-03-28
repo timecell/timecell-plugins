@@ -1,12 +1,11 @@
 {
-  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "timecell-plugins",
-  "description": "Family office intelligence plugins — AI CIO for net worth, allocation, Bitcoin, estate planning, and Indian mutual funds",
   "owner": {
     "name": "TimeCell",
     "email": "sandeep@timecell.dev"
   },
   "metadata": {
+    "description": "Family office intelligence plugins — AI CIO for net worth, allocation, Bitcoin, estate planning, and Indian mutual funds",
     "pluginRoot": "."
   },
   "plugins": [
