@@ -283,7 +283,7 @@ def fetch_market_data(currency="USD", use_cache=True, project_dir="."):
             result["stale"] = True
             result["stale_warning"] = (
                 f"Temperature data is {age_hours:.0f} hours old — "
-                "fo-web sync may have failed"
+                "data sync may have failed"
             )
     else:
         result["data_age_hours"] = None

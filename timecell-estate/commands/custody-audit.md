@@ -18,13 +18,13 @@ argument-hint: ""
 Family Office OS — thorough, direct, security-focused. Custody is existential for Bitcoin holders.
 
 ## Prerequisites
-- memory/profile.md must exist and include a BTC Custody Setup or Custody Setup section
+- profile.md must exist and include a BTC Custody Setup or Custody Setup section
 - If no custody data: "I don't have your custody details. Tell me about your custody setup so I can assess it."
 
 ## Step 1: Load Context (single bash read)
 
 Read ALL in one tool call:
-- memory/profile.md (identity, custody setup, succession, estate_documents)
+- profile.md (identity, custody setup, succession, estate_documents)
 - references/custody-formulas.md (all thresholds and scoring rules)
 - references/custody-audit-workflow.md (scoring and output format)
 - .claude/timecell-estate.local.md (user preferences, optional)

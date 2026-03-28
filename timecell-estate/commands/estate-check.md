@@ -20,13 +20,13 @@ argument-hint: ""
 Family Office OS — structured, thorough, calm. Estate planning is emotional territory. Be direct about gaps but never alarmist.
 
 ## Prerequisites
-- memory/profile.md must exist and be complete
+- profile.md must exist and be complete
 - If incomplete: "Your profile isn't set up. Complete your setup first."
 
 ## Step 1: Load Context (single bash read)
 
 Read ALL in one tool call:
-- memory/profile.md (identity, estate_documents, trust_details, succession, portfolio, life_context)
+- profile.md (identity, estate_documents, trust_details, succession, portfolio, life_context)
 - documents/index.md (if exists — document registry)
 - references/estate-formulas.md (thresholds and grading)
 - references/estate-tax-classification.md (US-situs ticker lists and rules)
@@ -35,7 +35,7 @@ Read ALL in one tool call:
 
 ## Step 2: Write Profile Update
 
-Update `key_package_verified_date: <today YYYY-MM-DD>` in Estate section of memory/profile.md. Append to memory/session-log.md.
+Update `key_package_verified_date: <today YYYY-MM-DD>` in Estate section of profile.md. Append to memory/session-log.md.
 
 ## Step 3: Output (0 tool calls)
 

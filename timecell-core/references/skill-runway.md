@@ -55,4 +55,4 @@ Runway: XX months
 | **Runway** | **XX months** |
 
 ### Step 5: Zone Assignment
-Apply thresholds from `guardrails` skill (CRITICAL < 12, WARNING 12-18, WATCH 18-24, SAFE 24-36, STRONG > 36).
+Apply thresholds from `computation-formulas.md` (CRITICAL < 12, WARNING 12-18, WATCH 18-24, SAFE 24-36, STRONG > 36).

@@ -22,7 +22,7 @@ Compute three views:
 Apply concentration thresholds from the **Guardrail Zones** section of computation-formulas.md.
 
 ### Step 2: Check Concentration
-Reference the `guardrails` skill for thresholds. Key checks:
+Reference `computation-formulas.md` for thresholds. Key checks:
 
 | Check | Threshold | Zone |
 |-------|-----------|------|

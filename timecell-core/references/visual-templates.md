@@ -14,7 +14,7 @@ Available libraries: React, Tailwind CSS, Recharts, shadcn/ui, Lucide icons.
 - **Entity table:** Entity name, value, % of total, asset class. Bold totals row
 - **Guardrail summary:** Compact status row — one indicator per guardrail, zone label (CRITICAL/WARNING/WATCH/SAFE/STRONG)
 
-**Data sources:** Net worth from computation-formulas.md, allocation from entity sums, guardrails from skill-guardrails thresholds.
+**Data sources:** Net worth from computation-formulas.md, allocation from entity sums, guardrails from computation-formulas.md thresholds.
 
 ## 2. Crash Survival Waterfall
 
@@ -36,7 +36,7 @@ Available libraries: React, Tailwind CSS, Recharts, shadcn/ui, Lucide icons.
 - **Trend indicator:** Arrow or label showing direction vs previous snapshot (Improving/Stable/Deteriorating) — only when previous snapshot available
 - **Action items:** For CRITICAL/WARNING zones — specific breach description and fix suggestion
 
-**Data sources:** Thresholds from skill-guardrails.md (single source of truth). Actuals computed inline. Trends from snapshot comparison.
+**Data sources:** Thresholds from computation-formulas.md (single source of truth). Actuals computed inline. Trends from snapshot comparison.
 
 ## 4. Goal Progress
 

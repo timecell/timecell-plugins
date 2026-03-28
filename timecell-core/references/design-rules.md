@@ -10,11 +10,11 @@ Skills define WHAT to compute (net worth sum, allocation %, runway months). Clau
 
 ## 2. Thresholds in one place
 
-All guardrail thresholds live in the `guardrails` skill. Commands and other skills reference the guardrails skill — they never duplicate threshold values.
+All guardrail thresholds live in `computation-formulas.md`. Commands and other references point to computation-formulas.md — they never duplicate threshold values.
 
 **Why:** A threshold changed in one place but not another creates contradictory advice. Single source of truth prevents this.
 
-**If a threshold seems wrong:** Update the `guardrails` skill, not the command or skill that references it.
+**If a threshold seems wrong:** Update `computation-formulas.md`, not the command or reference that cites it.
 
 ## 3. Suppression is display-only
 

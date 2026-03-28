@@ -37,9 +37,9 @@ Compute from step 1 data:
 - **Delta** from previous snapshot
 
 **Guardrail thresholds:**
-- Runway: CRITICAL < 12mo, WARNING < 24mo, SAFE 24-36mo, STRONG > 36mo
-- Single entity: CRITICAL > 50%, WARNING > 40%
-- Asset class: WARNING > 50%
+- Runway: CRITICAL < 12mo, WARNING 12-18mo, WATCH 18-24mo, SAFE 24-36mo, STRONG > 36mo
+- Single entity: CRITICAL > 50%, WARNING > 30%, WATCH > 20%
+- Asset class: WARNING > 50%, WATCH > 40%
 - Liquid = cash, treasuries, equities, crypto
 
 Write snapshot to `snapshots/YYYY-MM-DD.md` with tables.

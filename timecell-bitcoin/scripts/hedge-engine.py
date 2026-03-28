@@ -3,7 +3,7 @@
 Hedge Engine — timecell-bitcoin plugin
 
 Pure Python engine functions for downside insurance computation.
-Ports battle-tested hedge logic from fo-web TypeScript engine.
+TimeCell hedge logic — pure Python engine functions.
 
 All functions: stateless, JSON-in JSON-out, no database access, no API calls.
 
@@ -222,7 +222,7 @@ def calculate_geometric_mean_cagr(input_data: dict) -> dict:
     """Compare hedged vs unhedged CAGR over a crash cycle.
 
     Formula: CAGR = ((1 + r - c)^(n-1) * (1 - crash + recovery))^(1/n) - 1
-    Must match fo-web calculateGeometricMeanCAGR exactly.
+    Canonical geometric mean CAGR implementation.
     """
     normal_return = input_data.get("normal_return")
     annual_cost = input_data.get("annual_cost")
