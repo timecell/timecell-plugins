@@ -13,56 +13,42 @@ argument-hint: ""
 
 ## Steps
 
-### Step 1: Welcome + Basics
+### Phase 1: Trust (Steps 1-3) — No financial data requested
+
+#### Step 1: Welcome + Concerns
 "Welcome to TimeCell. I'm your AI Chief Investment Officer — I'll help you manage your family's finances with the same rigor a professional family office would bring.
 
-Let's start with the basics. What's your name, and where are you based?"
+Three things to know upfront:
+1. Everything stays on this machine — no cloud storage, no tracking.
+2. I provide frameworks, not investment advice.
+3. This takes about 10 minutes.
 
-Capture: name, residency, age (if offered).
+What's your name? And what brought you here — what's the financial question or concern that's on your mind?"
 
-### Step 2: Financial Situation
-"What does your financial picture look like at a high level? Don't worry about exact numbers yet — we'll get precise later. I'm looking for: what are your main assets (property, investments, crypto, cash), and roughly what's the total?"
+Capture: name, residency (if offered), primary concern. Write concern to `memory/open-questions.md`.
 
-Capture: asset classes, rough total, currency.
+#### Step 2: Current Approach
+"How are you managing your finances today? Spreadsheet, advisor, nothing formal — all fine. I'm trying to understand what's working and what isn't."
 
-### Step 3: Goals
-"What are your top 2-3 financial goals? These could be anything — retirement, education funding, property, financial independence, wealth preservation."
+Capture: current approach, pain points, advisor situation. Write to `memory/context-notes.md`.
 
-Capture: goals with rough timelines and target amounts.
+#### Step 3: Value Demo — CIO Insight
+Based on concerns + approach from Steps 1-2, deliver a mini-insight. NO financial data needed — this is purely from qualitative conversation:
 
-### Step 4: Monthly Expenses
-"Roughly what are your monthly living expenses? This helps me calculate your financial runway — how many months you could sustain your lifestyle from liquid assets alone."
+"Based on what you've told me about [concern], here's how I'd think about that as your CIO:
 
-Capture: monthly expenses, currency.
+[1-2 paragraph structured insight — gap identification, framework suggestion, or priority ordering based on what the user shared. Reference their specific words.]
 
-### Step 5: Risk Tolerance
-"On a scale of conservative to aggressive, how would you describe your risk tolerance?"
+To give you actual numbers and daily monitoring, I need your financial picture. Ready to walk me through it?"
 
-Capture: risk tolerance description.
+Set `trust_phase_complete: true` in profile.md after delivering value demo.
 
-### Step 6: Create Workspace
+### Phase 2: Data Capture (Steps 4-7) — Streamlined
 
-Create `profile.md`:
-```
-# Financial Profile
+#### Step 4: Financial Situation
+"Walk me through your financial picture — what you own, what you owe, and roughly what it's worth. Don't worry about being exact — we'll refine later."
 
-## Personal
-- Name: [from conversation]
-- Age: [if provided]
-- Residency: [from conversation]
-- Risk tolerance: [from conversation]
-
-## Financial
-- Base currency: [infer from residency, confirm]
-- Monthly expenses: [from conversation]
-
-## Goals
-- **[Goal 1]**: [target] by [date] | Priority: [High/Medium/Low]
-- **[Goal 2]**: [target] by [date] | Priority: [High/Medium/Low]
-
-## Preferences
-- Review cadence: Weekly health check, monthly deep review
-```
+Capture: asset classes, rough totals, currency, family context if offered.
 
 Create `entities/` with one `.md` file per account/asset:
 ```
@@ -77,23 +63,71 @@ Create `entities/` with one `.md` file per account/asset:
 [value, quantity, or both — from conversation]
 ```
 
+#### Step 5: Burn + Runway
+"What are your monthly expenses — everything included? And your income?"
+
+Capture: monthly expenses, income, currency.
+Show surplus calculation and runway.
+
+#### Step 6: Risk + Goals
+Two risk questions (using actual largest holding) + goal prompt:
+
+"Two questions about how you handle stress:
+1. If [largest holding] dropped 50%, what would you do?
+2. What financial scenario keeps you up at night?"
+
+After risk capture, show CIO Summary, then ask about goals.
+
+#### Step 7: Preferences + Completion
+
+"How do you want me to communicate?
+- Density: Concise or detailed?
+- Challenge: Gentle nudges or straight talk?"
+
+Create `profile.md`:
+```
+# Financial Profile
+
+## Personal
+- Name: [from conversation]
+- Age: [if provided]
+- Residency: [from conversation]
+- Risk tolerance: [from conversation]
+- trust_phase_complete: true
+
+## Financial
+- Base currency: [infer from residency, confirm]
+- Monthly expenses: [from conversation]
+
+## Goals
+- **[Goal 1]**: [target] by [date] | Priority: [High/Medium/Low]
+- **[Goal 2]**: [target] by [date] | Priority: [High/Medium/Low]
+
+## Preferences
+- Review cadence: Weekly health check, monthly deep review
+```
+
 Create empty directories: `snapshots/`, `decisions/`, `memory/`.
 Create `.timecell/` directory for config and cache.
 
 Run `python3 scripts/validate-profile.py profile.md` to verify the profile is valid.
 
-### Step 7: Confirm + Next Steps
+Show summary:
 
-Show summary of what was created:
+"**Setup complete.**
 
-"Your financial workspace is set up:
+Your financial workspace is set up:
 - Profile with your goals and preferences
 - [N] entity files for your accounts
 - Snapshot and decision journals (ready for use)
 
 Say 'go' or /tc:start for your first portfolio health check."
 
-### Step 8: Plugin Recommendations
+### Phase 3: Enrichment (Post-setup, passive)
+
+API keys and integrations are NEVER mentioned during setup. They are discovered naturally post-setup through /tc:start and lifecycle hints.
+
+### Plugin Recommendations (after completion)
 
 After setup, check if add-on plugins would help:
 - If user holds Bitcoin: "The bitcoin module adds temperature-based frameworks and cycle awareness. Want to learn more?"
