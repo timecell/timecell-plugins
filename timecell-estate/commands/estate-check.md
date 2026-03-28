@@ -1,4 +1,9 @@
-# /estate-check — Estate Completeness Review
+---
+description: Estate completeness review — legal documents, BTC succession, US estate tax, trust structure, insurance adequacy
+argument-hint: ""
+---
+
+# /tc:estate-check — Estate Completeness Review
 
 5-dimension estate assessment: legal documents, BTC succession, US estate tax, trust structure, insurance adequacy.
 
@@ -51,7 +56,7 @@ Update `key_package_verified_date: <today YYYY-MM-DD>` in the Estate section of 
 
 Append to memory/session-log.md:
 ```
-### /estate-check — [date]
+### /tc:estate-check — [date]
 Grade: [X]. [One-line summary.]
 ```
 
@@ -71,7 +76,7 @@ Zone icons in Zone column only. Skip non-applicable dimensions with "Not applica
 
 3. **Priority Actions** (if any AMBER/RED): numbered list, RED first, then AMBER, ordered by financial impact within severity. Each action: what to do, why it matters, who can help.
 
-4. **Context notes** (if applicable): active legal engagements, jurisdiction considerations, cross-reference with /check.
+4. **Context notes** (if applicable): active legal engagements, jurisdiction considerations, cross-reference with /tc:check.
 
 If Grade A: be concise, confirm completeness, do not invent gaps.
 

@@ -1,4 +1,9 @@
-# /create-key-package — Bitcoin Key Package Generator
+---
+description: Bitcoin key package generator — standalone succession document for a specific guardian
+argument-hint: "[--for <guardian_name>]"
+---
+
+# /tc:create-key-package — Bitcoin Key Package Generator
 
 Generate a standalone succession document for a specific guardian. Custody-adaptive: multi-sig, single-sig, or exchange paths.
 
@@ -6,8 +11,8 @@ Generate a standalone succession document for a specific guardian. Custody-adapt
 
 ## Syntax
 ```
-/create-key-package --for <guardian_name>
-/create-key-package
+/tc:create-key-package --for <guardian_name>
+/tc:create-key-package
 ```
 
 ## Persona
@@ -63,7 +68,7 @@ In memory/profile.md:
 
 Append to memory/session-log.md:
 ```
-### /create-key-package — [date]
+### /tc:create-key-package — [date]
 Generated key package for [guardian]. Custody type: [type]. Gaps flagged: [list or "none"].
 ```
 

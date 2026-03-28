@@ -1,22 +1,27 @@
-# /documents — Estate Document Registry
+---
+description: Estate document registry — structured tracking with completeness scoring and CRUD operations
+argument-hint: "[list|add|update|find|--open|--summary]"
+---
+
+# /tc:documents — Estate Document Registry
 
 Structured registry of estate documents with deterministic status tracking. CRUD operations + completeness scoring.
 
 ## Tool Call Budget: 2-3
 
 ## Subcommands
-- `/documents` or `/documents list` — full registry with status
-- `/documents add` — interactive flow to register a new document
-- `/documents add <type> <path>` — register a local file directly
-- `/documents add <type> --gdrive <fileId-or-URL>` — register GDrive reference
-- `/documents update [doc-id]` — update metadata for existing entry
-- `/documents list --missing` — gap/planned items only
-- `/documents list --stale` — stale items only
-- `/documents list --expiring` — documents expiring within 30 days
-- `/documents list --category <category>` — filter by category
-- `/documents find <query>` — search registry by keyword
-- `/documents --open [doc-id]` — open document or show location
-- `/documents --summary` — compact completeness score
+- `/tc:documents` or `/tc:documents list` — full registry with status
+- `/tc:documents add` — interactive flow to register a new document
+- `/tc:documents add <type> <path>` — register a local file directly
+- `/tc:documents add <type> --gdrive <fileId-or-URL>` — register GDrive reference
+- `/tc:documents update [doc-id]` — update metadata for existing entry
+- `/tc:documents list --missing` — gap/planned items only
+- `/tc:documents list --stale` — stale items only
+- `/tc:documents list --expiring` — documents expiring within 30 days
+- `/tc:documents list --category <category>` — filter by category
+- `/tc:documents find <query>` — search registry by keyword
+- `/tc:documents --open [doc-id]` — open document or show location
+- `/tc:documents --summary` — compact completeness score
 
 ## Valid Document Types
 `will`, `trust-deed`, `lpa`, `healthcare-directive`, `insurance`, `key-package`, `digital-asset-plan`, `cpf-nomination`, `tax`, `identity`, `insurance-life`, `insurance-health`, `insurance-property`, `insurance-liability`, `property-deed`, `property-title`, `property-valuation`, `loan-mortgage`, `loan-personal`, `loan-business`, `legal-partnership`, `legal-shareholder`, `legal-contract`, `tax-return`, `tax-assessment`, `tax-ruling`, `other`
@@ -56,7 +61,7 @@ echo '---SEPARATOR---';
 python3 scripts/documents-checker.py categories documents/index.md
 ```
 
-If file doesn't exist: "No documents registered yet. Run `/documents add` to register your first document."
+If file doesn't exist: "No documents registered yet. Run `/tc:documents add` to register your first document."
 
 ### Step 2: Display
 
@@ -86,7 +91,7 @@ Expiry alerting in Status column: Expiring in N days, EXPIRED.
 Ask: type, name, location, date, notes. Write entry. Confirm.
 
 ## Flow: find
-Search all fields case-insensitive. If no match: "No documents matching '<query>'. Run `/documents list` to see all registered documents." — STOP. No suggestions after.
+Search all fields case-insensitive. If no match: "No documents matching '<query>'. Run `/tc:documents list` to see all registered documents." — STOP. No suggestions after.
 
 ## Flow: update
 Find by doc-id, ask what to update, show old->new, confirm, recalculate next_review.
@@ -102,4 +107,4 @@ On first run, check if profile has `estate_documents:` block. If found, offer im
 - Shortened locations: GDrive -> "Google Drive", physical -> description
 - Always show completeness score after table
 - Always show legal disclaimer: "This registry tracks document references only. Verify with your legal advisor that all documents are valid and current for your jurisdiction."
-- Suggest `/documents add` when missing items displayed
+- Suggest `/tc:documents add` when missing items displayed

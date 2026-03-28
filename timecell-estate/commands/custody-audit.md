@@ -1,4 +1,9 @@
-# /custody-audit — Custody Posture Assessment
+---
+description: Custody posture assessment — self-custody ratio, key security, backup, recovery cadence, geographic distribution, succession readiness
+argument-hint: ""
+---
+
+# /tc:custody-audit — Custody Posture Assessment
 
 6-dimension custody scorecard: self-custody ratio, key security, backup, recovery cadence, geographic distribution, succession readiness.
 
@@ -50,7 +55,7 @@ Score each dimension using thresholds from references/custody-formulas.md:
 
 Append to memory/session-log.md:
 ```
-### /custody-audit — [date]
+### /tc:custody-audit — [date]
 Grade: [X]. Overall: [zone]. [One-line summary.]
 ```
 
