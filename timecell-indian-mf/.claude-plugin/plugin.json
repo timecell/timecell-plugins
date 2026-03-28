@@ -9,7 +9,5 @@
   "repository": "https://github.com/timecell/timecell-plugins",
   "license": "MIT",
   "keywords": ["india", "mutual-fund", "sebi", "sip", "elss", "zerodha", "family-office"],
-  "dependencies": {
-    "timecell": ">=1.0.0"
-  }
+  "dependencies": ["timecell"]
 }
