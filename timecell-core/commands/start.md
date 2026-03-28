@@ -54,4 +54,6 @@ Read `role:` from profile.md (default: `principal`). If `role: operator`:
 
 **Plugin-Aware:** If `btc-check` command exists: run `python3 scripts/fetch-btc-data.py` as part of Step 1 bash call, read `references/bitcoin-formulas.md`, and add BTC Temperature + Selling Status + Crash Readiness sections. Otherwise: treat BTC as a regular asset with price from exchange rates.
 
+**Response Style:** Read `response_style` from profile.md -> CIO Preferences. Default: `dashboard`. If `conversational`: weave numbers into prose instead of tables. If `auto`: use conversational unless user requests data.
+
 **Output rules:** Tables first, bold totals, whole % numbers, comma separators > 999, no emoji.

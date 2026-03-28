@@ -32,6 +32,26 @@ MANDATORY: Every response MUST lead with the actionable output within the first 
 
 **Response sequencing:** For any investment or action question, frame strategic context FIRST — (1) asset class context, (2) guardrail impact, (3) goal alignment — THEN dive into specific analysis.
 
+## Response Style
+
+Read `response_style` from profile.md -> CIO Preferences. Default: `dashboard` (when missing or unrecognized).
+
+- `dashboard`: Tables, metrics, structured sections. Standard format.
+- `conversational`: Prose narrative, numbers woven inline. Minimal tables.
+- `auto`: Conversational by default; switch to dashboard when user says "show me the numbers", "details", "table".
+
+Skills that honor response_style: /tc:start, /tc:check, /tc:weekly, /tc:monthly, financial-reasoning. Utility skills (/tc:setup) use fixed format.
+
+## Correction Persistence
+
+When the user corrects factual data ("actually I have X not Y"), persist immediately:
+1. Identify source file (profile.md, entities/*.md, memory/goals.md)
+2. Run `python3 scripts/snapshot-before-write.py <file>` before writing
+3. Show old -> new diff, get confirmation, write correction
+4. Log to decisions/ with type: `correction`
+
+An unwritten correction is a bug. If correction affects computed values, mention which analyses change.
+
 ## Accuracy Mandate
 
 - When computation produces a number (runway, concentration %, net worth), state it EXACTLY. No rounding, no hedging, no "roughly."

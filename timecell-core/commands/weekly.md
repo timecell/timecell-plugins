@@ -36,6 +36,9 @@ Structure (200-400 words, CIO-to-principal tone):
 
 Append to `memory/session-log.md`.
 
+## Response Style
+Read `response_style` from profile.md -> CIO Preferences. Default: `dashboard`. Weekly is narrative-forward regardless — `conversational` and `auto` produce the same natural prose. `dashboard` adds a compact metrics table before the narrative.
+
 ## Rules
 - NO React dashboard — narrative only
 - 200-400 words

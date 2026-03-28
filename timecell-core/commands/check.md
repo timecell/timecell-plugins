@@ -46,6 +46,8 @@ Write `snapshots/YYYY-MM-DD.md`. Then present:
 4. Recommendations
 5. React dashboard artifact
 
+**Response Style:** Read `response_style` from profile.md -> CIO Preferences. Default: `dashboard`. If `conversational`: lead with verdict in prose, inline numbers. If `auto`: conversational unless user requests data.
+
 **Rules:** Runway impact is key. Frame via framework. Specific scenario first if requested.
 
 **Plugin-Aware:** If `btc-check` command exists: read `references/bitcoin-formulas.md` and extend stress test suite with the 5 bitcoin-specific crash scenarios (btc_crash_25/50/75, market_crash_20/40). Include BTC temperature context in risk verdict. Otherwise: use standard crypto shock multipliers only.

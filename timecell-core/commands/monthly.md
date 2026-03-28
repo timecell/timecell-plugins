@@ -70,4 +70,6 @@ Apply lifecycle greeting. Lead with numbers.
 
 **Plugin-Aware:** If `btc-check` command exists: read `references/bitcoin-formulas.md` and add BTC temperature, selling status, and BTC-specific crash scenarios to the monthly review. Otherwise: standard crypto analysis only.
 
+**Response Style:** Read `response_style` from profile.md -> CIO Preferences. Default: `dashboard`. If `conversational`: prose-heavy with inline numbers, fewer tables. If `auto`: conversational unless user requests data.
+
 **Output:** 500-800 words + dashboard. Tables for data, narrative for outlook. Reference specific dates/amounts.
