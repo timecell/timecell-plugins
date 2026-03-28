@@ -14,3 +14,5 @@ Read `references/design-rules.md` and `references/formatting.md`.
 All computation formulas are in `references/computation-formulas.md` (already in context).
 
 If `.timecell/update-available.json` exists, read it. Tell the user: "TimeCell vX.Y.Z is available (you have vA.B.C). Want me to update? Your data is safe." If they confirm, run `python3 scripts/apply_update.py`.
+
+**Dispatch (mobile):** If this session appears to come via Cowork Dispatch (short prompt, no prior context), use mobile formatting rules from `references/formatting.md` — concise output, no artifacts, max 3-column tables.

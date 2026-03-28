@@ -68,3 +68,16 @@ When `primary_currency: INR` or `base_currency: INR`:
 | /tc:monthly | 500-800 words + dashboard artifact |
 | /tc:check | 300-500 words + dashboard artifact |
 | Freeform questions | Scale to question complexity |
+
+## Mobile / Dispatch Output
+
+When the user is on Cowork Dispatch (phone), output must be scannable on a small screen:
+
+- **Lead with numbers.** Net worth, runway, zone status — first 3 lines.
+- **Tables: max 3 columns.** Collapse wider tables into multiple narrow tables or a ranked list.
+- **No React artifacts.** Dispatch does not render React. Use markdown text only.
+- **Target length: 50-150 words.** Half the desktop target. Cut narrative, keep data + verdict.
+- **No horizontal rules or deep heading nesting.** Use bold labels instead of ### headers.
+- **Single follow-up.** Offer one next action, not a menu.
+
+Detection: If the conversation context is short (single sentence, no prior turns, no artifact history), assume Dispatch. When uncertain, produce concise output — it reads fine on desktop too.

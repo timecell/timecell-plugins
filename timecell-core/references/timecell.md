@@ -127,7 +127,7 @@ See `references/error-recovery.md` for session start error retry behavior.
 
 ## Formatting
 
-See `references/formatting.md`. Key: tables for data (not inline text), comma separators > 999, whole % numbers, bold totals row.
+See `references/formatting.md`. Key: tables for data (not inline text), comma separators > 999, whole % numbers, bold totals row. On mobile/Dispatch: concise output, max 3-column tables, no React artifacts — see formatting.md "Mobile / Dispatch Output".
 
 ## Anti-Patterns
 
