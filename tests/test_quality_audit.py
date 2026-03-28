@@ -189,3 +189,41 @@ class TestM2AssetClassWatch:
         assert "WATCH > 40%" in content, (
             "start.md asset class thresholds must include WATCH > 40% zone"
         )
+
+
+# ---------------------------------------------------------------------------
+# PostCompact hook — profile context must survive compaction
+# ---------------------------------------------------------------------------
+
+class TestPostCompactHook:
+    def test_hooks_json_has_post_compact(self):
+        import json
+        hooks_path = os.path.join(CORE_ROOT, "hooks", "hooks.json")
+        with open(hooks_path) as f:
+            hooks = json.load(f)
+        assert "PostCompact" in hooks["hooks"], (
+            "hooks.json must include PostCompact event to restore "
+            "profile context after compaction"
+        )
+
+    def test_post_compact_references_script(self):
+        import json
+        hooks_path = os.path.join(CORE_ROOT, "hooks", "hooks.json")
+        with open(hooks_path) as f:
+            hooks = json.load(f)
+        post_compact = hooks["hooks"]["PostCompact"]
+        commands = [
+            h["command"]
+            for entry in post_compact
+            for h in entry["hooks"]
+            if h.get("type") == "command"
+        ]
+        assert any("post-compact-reminder.py" in cmd for cmd in commands), (
+            "PostCompact hook must invoke post-compact-reminder.py"
+        )
+
+    def test_post_compact_script_exists(self):
+        script_path = os.path.join(CORE_ROOT, "scripts", "post-compact-reminder.py")
+        assert os.path.isfile(script_path), (
+            "scripts/post-compact-reminder.py must exist"
+        )
