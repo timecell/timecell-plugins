@@ -8,10 +8,8 @@
 | Plugin | What It Adds | Suggest When |
 |--------|-------------|--------------|
 | timecell-bitcoin | BTC temperature model, selling tiers, custody risk, cycle awareness | User holds Bitcoin |
-| timecell-structures | Multi-entity modeling, trust analysis, jurisdiction rules | User has 5+ entities or trusts |
-| timecell-tax | Jurisdiction-specific tax optimization, gain/loss tracking | User asks about tax |
+| timecell-indian-mf | Indian mutual fund intelligence, SEBI classification, NAV tracking, SIP/XIRR | User holds Indian mutual funds |
 | timecell-estate | Succession planning, will/trust review, key packages | User has family or dependents |
-| timecell-engine | Deterministic Python calculations, pre-computed snapshots | Large/complex portfolios |
 
 ## How to Detect Add-ons
 

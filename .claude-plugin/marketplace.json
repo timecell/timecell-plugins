@@ -1,28 +1,63 @@
 {
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "timecell-plugins",
+  "description": "Family office intelligence plugins — AI CIO for net worth, allocation, Bitcoin, estate planning, and Indian mutual funds",
   "owner": {
-    "name": "TimeCell"
+    "name": "TimeCell",
+    "email": "sandeep@timecell.dev"
   },
   "plugins": [
     {
       "name": "timecell",
-      "source": "./timecell-core",
-      "description": "Family Office OS — your AI CIO. Net worth tracking, allocation analysis, guardrails, and financial planning."
+      "description": "Family Office OS — your AI CIO. Net worth tracking, allocation analysis, guardrails, and financial planning.",
+      "category": "finance",
+      "source": {
+        "source": "git-subdir",
+        "url": "timecell/timecell-plugins",
+        "path": "timecell-core",
+        "ref": "main",
+        "sha": "f7502445630079331a62f0f610ef3659d5ffa4c9"
+      },
+      "homepage": "https://github.com/timecell/timecell-plugins"
     },
     {
       "name": "timecell-bitcoin",
-      "source": "./timecell-bitcoin",
-      "description": "Bitcoin CIO intelligence — temperature, selling ladder, crash survival, DCA, conviction framework. Requires timecell core."
+      "description": "Bitcoin CIO intelligence — temperature, selling ladder, crash survival, DCA, conviction framework. Requires timecell core.",
+      "category": "finance",
+      "source": {
+        "source": "git-subdir",
+        "url": "timecell/timecell-plugins",
+        "path": "timecell-bitcoin",
+        "ref": "main",
+        "sha": "f7502445630079331a62f0f610ef3659d5ffa4c9"
+      },
+      "homepage": "https://github.com/timecell/timecell-plugins"
     },
     {
       "name": "timecell-indian-mf",
-      "source": "./timecell-indian-mf",
-      "description": "Indian mutual fund intelligence — SEBI classification, NAV tracking, underperformer detection, SIP/XIRR, Zerodha integration. Requires timecell core."
+      "description": "Indian mutual fund intelligence — SEBI classification, NAV tracking, underperformer detection, SIP/XIRR, Zerodha integration. Requires timecell core.",
+      "category": "finance",
+      "source": {
+        "source": "git-subdir",
+        "url": "timecell/timecell-plugins",
+        "path": "timecell-indian-mf",
+        "ref": "main",
+        "sha": "f7502445630079331a62f0f610ef3659d5ffa4c9"
+      },
+      "homepage": "https://github.com/timecell/timecell-plugins"
     },
     {
       "name": "timecell-estate",
-      "source": "./timecell-estate",
-      "description": "Estate planning, succession, trust tracking, key packages, custody audit, document registry. Requires timecell core."
+      "description": "Estate planning, succession, trust tracking, key packages, custody audit, document registry. Requires timecell core.",
+      "category": "finance",
+      "source": {
+        "source": "git-subdir",
+        "url": "timecell/timecell-plugins",
+        "path": "timecell-estate",
+        "ref": "main",
+        "sha": "f7502445630079331a62f0f610ef3659d5ffa4c9"
+      },
+      "homepage": "https://github.com/timecell/timecell-plugins"
     }
   ]
 }
