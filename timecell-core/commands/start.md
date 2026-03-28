@@ -1,16 +1,25 @@
 ---
-description: Daily portfolio health check — net worth, allocation, guardrails, and what needs attention
+description: >
+  Daily portfolio health check — net worth, allocation, guardrails, and what needs attention.
+  Triggers: "how am I doing", "portfolio check", "daily snapshot", "what's my net worth",
+  "show me my portfolio", "financial overview", "where do I stand"
 argument-hint: ""
 ---
 
 # /tc:start — Portfolio Health Check
+
+## When NOT to use
+- Deep what-if analysis or scenario modeling — use financial-reasoning skill
+- Estate or succession questions — use /tc:estate-check
+- Bitcoin-specific deep dive — use /tc:btc-check
+- Mutual fund drill-down — use /tc:mf-review
 
 ## Budget: 2 tool calls max. Do NOT use WebSearch, ToolSearch, or load skills.
 
 ## Step 1: Read + Fetch (1 bash call)
 
 ```bash
-cat profile.md entities/*.md 2>/dev/null; echo "===SEP==="; ls -t snapshots/*.md 2>/dev/null | head -1 | xargs cat 2>/dev/null; echo "===SEP==="; grep -c "^## [0-9]" memory/session-log.md 2>/dev/null || echo 1; echo "===SEP==="; python3 scripts/fetch-exchange-rates.py 2>/dev/null
+cat profile.md entities/*.md 2>/dev/null; echo "===SEP==="; ls -t snapshots/*.md 2>/dev/null | head -1 | xargs cat 2>/dev/null; echo "===SEP==="; grep -c "^## [0-9]" memory/session-log.md 2>/dev/null || echo 1; echo "===SEP==="; python3 scripts/fetch-exchange-rates.py 2>/dev/null; echo "===SEP==="; cat .claude/timecell.local.md 2>/dev/null
 ```
 
 Returns: profile, entities, latest snapshot, session count, exchange rates (BTC price under "BTC" key).

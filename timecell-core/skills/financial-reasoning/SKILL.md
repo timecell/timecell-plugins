@@ -3,11 +3,19 @@ name: financial-reasoning
 description: |
   Free-form financial analysis and CIO advice. Handles what-if scenarios, investment
   questions, portfolio adjustments, and general reasoning. This is the default skill
-  when no specific command matches. Triggers on "what if", "should I", "how would",
-  "compare", "analyze", "is it worth", or any financial question.
+  when no specific command matches. Triggers: "what if", "should I", "how would",
+  "compare", "analyze", "is it worth", "what happens if I", "can I afford",
+  "how much can I spend", "rebalance", or any financial question.
 ---
 
 # Financial Reasoning
+
+## When NOT to use
+- Daily portfolio snapshot — use /tc:start
+- Structured stress test with full suite — use /tc:check
+- Monthly/weekly reviews — use /tc:monthly or /tc:weekly
+- Bitcoin-specific analysis (temperature, selling ladder) — use /tc:btc-check
+- Estate or succession questions — use /tc:estate-check
 
 ## When This Runs
 

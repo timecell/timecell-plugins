@@ -1,9 +1,17 @@
 ---
-description: Risk assessment and stress test — portfolio resilience, guardrail audit, risk verdict
+description: >
+  Risk assessment and stress test — portfolio resilience, guardrail audit, risk verdict.
+  Triggers: "am I safe", "stress test", "risk check", "crash survival", "what if market drops",
+  "how vulnerable am I", "can I survive a crash"
 argument-hint: "[optional: specific scenario, e.g. 'BTC drops 50%']"
 ---
 
 # /tc:check — Risk Assessment
+
+## When NOT to use
+- Daily portfolio overview without stress testing — use /tc:start
+- Single what-if question (e.g., "should I buy X") — use financial-reasoning skill
+- Bitcoin-specific crash scenarios — use /tc:btc-check (extends this with BTC-specific models)
 
 ## Budget: 3 tool calls max
 

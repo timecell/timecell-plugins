@@ -1,9 +1,17 @@
 ---
-description: Weekly narrative memo — what changed, trends, and what needs attention
+description: >
+  Weekly narrative memo — what changed, trends, and what needs attention.
+  Triggers: "weekly update", "what happened this week", "any changes this week",
+  "weekly memo", "week in review"
 argument-hint: ""
 ---
 
 # /tc:weekly — Weekly Review
+
+## When NOT to use
+- Full deep review with crash survival and goals — use /tc:monthly
+- Quick daily snapshot — use /tc:start
+- First few sessions (needs 2+ snapshots) — use /tc:start to build history first
 
 ## Budget: 2 tool calls max
 
@@ -14,7 +22,7 @@ Session count = `grep -c "^## [0-9]" memory/session-log.md`.
 ## Step 1: Read All Data (1 bash call)
 
 ```bash
-cat profile.md 2>/dev/null; echo "===SEP==="; cat snapshots/*.md 2>/dev/null | tail -n 200; echo "===SEP==="; cat decisions/*.md 2>/dev/null | tail -n 100; echo "===SEP==="; cat memory/session-log.md 2>/dev/null | tail -n 50
+cat profile.md 2>/dev/null; echo "===SEP==="; cat snapshots/*.md 2>/dev/null | tail -n 200; echo "===SEP==="; cat decisions/*.md 2>/dev/null | tail -n 100; echo "===SEP==="; cat memory/session-log.md 2>/dev/null | tail -n 50; echo "===SEP==="; cat .claude/timecell.local.md 2>/dev/null
 ```
 
 Returns: profile, recent snapshots (past 7-14 days), recent decisions, session log.

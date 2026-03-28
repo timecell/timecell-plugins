@@ -1,15 +1,23 @@
 ---
-description: Deep Bitcoin analysis — temperature, selling ladder, crash survival, DCA, conviction assessment
+description: >
+  Deep Bitcoin analysis — temperature, selling ladder, crash survival, DCA, conviction assessment.
+  Triggers: "bitcoin check", "BTC status", "selling ladder", "BTC temperature",
+  "hedge status", "how's my bitcoin", "crypto deep dive"
 argument-hint: ""
 ---
 
 # /tc:btc-check — Bitcoin Intelligence
 
+## When NOT to use
+- Non-BTC crypto analysis — not supported
+- General portfolio overview — use /tc:start (includes BTC summary automatically)
+- What-if scenarios not specific to BTC — use /tc:check or financial-reasoning skill
+
 ## Budget: 2-3 tool calls max. Do NOT use WebSearch, ToolSearch, or load skills.
 
 ## Step 1: Read + Fetch (1 bash call)
 
-    cat profile.md entities/*.md 2>/dev/null; echo "===BTC_SEP==="; cat references/bitcoin-formulas.md 2>/dev/null; echo "===BTC_SEP==="; cat references/bitcoin-conviction.md 2>/dev/null; echo "===BTC_SEP==="; cat references/hedge-formulas.md 2>/dev/null; echo "===BTC_SEP==="; python3 scripts/fetch-btc-data.py 2>/dev/null; echo "===BTC_SEP==="; cat .timecell/bitcoin/tier-status.md 2>/dev/null; echo "===BTC_SEP==="; cat .timecell/bitcoin/temperature-log.md 2>/dev/null
+    cat profile.md entities/*.md 2>/dev/null; echo "===BTC_SEP==="; cat references/bitcoin-formulas.md 2>/dev/null; echo "===BTC_SEP==="; cat references/bitcoin-conviction.md 2>/dev/null; echo "===BTC_SEP==="; cat references/hedge-formulas.md 2>/dev/null; echo "===BTC_SEP==="; python3 scripts/fetch-btc-data.py 2>/dev/null; echo "===BTC_SEP==="; cat .timecell/bitcoin/tier-status.md 2>/dev/null; echo "===BTC_SEP==="; cat .timecell/bitcoin/temperature-log.md 2>/dev/null; echo "===BTC_SEP==="; cat .claude/timecell-bitcoin.local.md 2>/dev/null
 
 Returns: profile + entities, bitcoin formulas, conviction framework, hedge formulas, live market data (JSON), tier execution history, temperature history.
 

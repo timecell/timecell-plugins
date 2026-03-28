@@ -155,11 +155,11 @@ def test_documents_references_checker_script():
 
 
 def test_content_file_count():
-    """Plugin should have exactly 12 content files (4 commands + 6 references + 1 script + 1 plugin.json)."""
+    """Plugin should have exactly 16 content files (4 commands + 10 references + 1 script + 1 plugin.json)."""
     count = 0
     for root, dirs, files in os.walk(PLUGIN_ROOT):
         dirs[:] = [d for d in dirs if d not in ("tests", "__pycache__", ".git", ".pytest_cache")]
         for f in files:
             if not f.startswith("."):
                 count += 1
-    assert count == 12, f"Plugin has {count} content files, expected 12 (excl. tests)"
+    assert count == 16, f"Plugin has {count} content files, expected 16 (excl. tests)"

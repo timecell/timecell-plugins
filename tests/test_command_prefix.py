@@ -77,9 +77,14 @@ class TestCommandPrefix:
                     with open(os.path.join(estate_dir, fname)) as f:
                         content = f.read()
                     for old_name in old_names:
-                        # Match /estate-check but not /tc:estate-check
-                        pattern = rf"(?<!/tc:){re.escape(old_name[1:])}"
-                        if re.search(rf"/{pattern}", content):
+                        # Match /estate-check but not /tc:estate-check or file paths like references/estate-check-workflow.md
+                        cmd_name = re.escape(old_name[1:])
+                        # Only match when preceded by space or start-of-line + slash (command invocation context)
+                        # Exclude file path references (references/...) and workflow filenames
+                        matches = re.findall(rf"(?:^|[\s(])/{cmd_name}(?!-workflow)(?:\s|$|[),])", content, re.MULTILINE)
+                        tc_matches = re.findall(rf"/tc:{cmd_name}", content)
+                        non_tc = len(matches) - len(tc_matches)
+                        if non_tc > 0:
                             violations.append(f"{fname}: still references '{old_name}'")
         assert not violations, "Old unprefixed references:\n" + "\n".join(violations)
 

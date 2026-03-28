@@ -12,6 +12,10 @@ On EVERY session start, read profile.md first.
 - If `Name:` exists but no files in entities/ -> Guide them to complete setup: "Your profile is set up, but I don't see any accounts yet. Run /tc:setup to add your holdings."
 - If profile is complete -> Progressive disclosure lifecycle (see below)
 
+## User Local Config
+
+If `.claude/timecell.local.md` exists, read it for user UX preferences. These override defaults but **never override guardrails**. See `references/local-config-template.md` for field definitions. If missing, all defaults apply — do not prompt the user to create one.
+
 ## Progressive Disclosure Lifecycle
 
 Session count = number of `## YYYY-MM-DD` lines in memory/session-log.md. If missing, session count = 1.

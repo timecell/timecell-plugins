@@ -1,9 +1,17 @@
 ---
-description: Full monthly portfolio review — comprehensive analysis, crash survival, goals, outlook
+description: >
+  Full monthly portfolio review — comprehensive analysis, crash survival, goals, outlook.
+  Triggers: "monthly review", "what changed this month", "full review", "month-end review",
+  "comprehensive review", "deep portfolio review"
 argument-hint: ""
 ---
 
 # /tc:monthly — Monthly Review
+
+## When NOT to use
+- Quick daily check — use /tc:start
+- Specific risk scenario — use /tc:check
+- First few sessions (needs 3+ snapshots) — use /tc:start to build history first
 
 ## Budget: 3 tool calls max
 
@@ -14,7 +22,7 @@ Session count = `grep -c "^## [0-9]" memory/session-log.md`.
 ## Step 1: Read All Data (1 bash call)
 
 ```bash
-cat profile.md entities/*.md snapshots/*.md memory/*.md decisions/*.md 2>/dev/null; echo "===SEP==="; python3 scripts/fetch-exchange-rates.py 2>/dev/null
+cat profile.md entities/*.md snapshots/*.md memory/*.md decisions/*.md 2>/dev/null; echo "===SEP==="; python3 scripts/fetch-exchange-rates.py 2>/dev/null; echo "===SEP==="; cat .claude/timecell.local.md 2>/dev/null
 ```
 
 Returns: profile, entities, all snapshots (for trends), memory, decisions, exchange rates.

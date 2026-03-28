@@ -1,10 +1,17 @@
 ---
-description: Set up your family office — guided onboarding that creates your financial profile
+description: >
+  Set up your family office — guided onboarding that creates your financial profile.
+  Triggers: "set up my family office", "configure TimeCell", "get started",
+  "I'm new here", "help me set up", "create my profile"
 argument-hint: ""
 ---
 
 # /tc:setup — Family Office Setup
 
+## When NOT to use
+- Already set up and want a portfolio check — use /tc:start
+- Want to update a single field in your profile — edit profile.md directly or ask
+- Adding a new entity to existing setup — just describe the asset
 
 ## Pre-Check
 

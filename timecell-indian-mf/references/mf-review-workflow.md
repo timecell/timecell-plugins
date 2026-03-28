@@ -1,0 +1,53 @@
+# MF Review Workflow
+
+Detailed analysis sections for /tc:mf-review. Compute ALL inline using mf-computation-formulas.md. Format all INR amounts per inr-formatting.md.
+
+## 1. MF Portfolio Summary
+- Total AUM (INR, Lakh/Crore notation)
+- Scheme count, data freshness (NAV date, Zerodha sync time)
+- Entity breakdown if multi-entity (HUF, company, personal)
+
+## 2. Category Allocation vs Targets
+- Equity / Debt / Hybrid / Other split (actual %)
+- Drift from target allocation (if set in profile)
+- SEBI category breakdown within equity (large/mid/small/flexi/sectoral)
+- Flag: sectoral/thematic > 15% of MF portfolio
+
+## 3. ELSS Lock-in Matrix
+- Per-SIP-installment unlock dates (from mf-computation-formulas.md ELSS rules)
+- Total locked amount, total unlocked amount
+- Next unlock date and amount
+- 80C utilization (if deduction data available)
+
+## 4. SIP Health
+- Active SIPs: count, monthly commitment (INR)
+- Paused/stopped SIPs flagged
+- SIP-to-lump-sum ratio
+- Missing SIPs (schemes without active SIP that should have one)
+
+## 5. Underperformer Deep Dive
+- Each scheme: 1Y return vs SEBI category average
+- XIRR for SIP investments (using mf-computation-formulas.md algorithm)
+- Delta classification: mild / significant / severe
+- Action recommendation: hold / review / exit
+
+## 6. Direct vs Regular Audit
+- Schemes on regular plan (detected from fund name)
+- Estimated annual savings from switching to direct
+- Priority list: largest savings first
+
+## 7. Expense Ratio Flags
+- Schemes where TER > category median + 50bps
+- Category median TER comparison table
+- Total portfolio-weighted TER
+
+## 8. React Dashboard Artifact
+Visual summary with:
+- Category allocation pie/donut chart
+- Underperformer heatmap
+- SIP health status indicators
+- ELSS lock-in timeline
+- Direct vs regular breakdown
+
+## Output Rules
+Tables first, bold totals, use INR Lakh/Crore notation per inr-formatting.md, comma separators, no emoji. Use indian-entity-types.md for entity-specific tax context.

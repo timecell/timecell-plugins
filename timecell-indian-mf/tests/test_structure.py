@@ -119,11 +119,11 @@ def test_mf_review_references_all_files():
 
 
 def test_content_file_count():
-    """Plugin should have exactly 8 content files (1 command + 4 references + 2 scripts + 1 plugin.json)."""
+    """Plugin should have exactly 9 content files (1 command + 5 references + 2 scripts + 1 plugin.json)."""
     count = 0
     for root, dirs, files in os.walk(PLUGIN_ROOT):
         dirs[:] = [d for d in dirs if d not in ("tests", "__pycache__", ".git", ".pytest_cache")]
         for f in files:
             if not f.startswith("."):
                 count += 1
-    assert count == 8, f"Plugin has {count} content files, expected 8 (excl. tests)"
+    assert count == 9, f"Plugin has {count} content files, expected 9 (excl. tests)"

@@ -2,7 +2,7 @@
 
 Read `references/timecell.md` and follow the CIO persona for this entire conversation.
 
-Read the user's data in a single batch (1 tool call): `profile.md`, all files in `entities/`, latest `snapshots/` file, and `memory/session-log.md`.
+Read the user's data in a single batch (1 tool call): `profile.md`, all files in `entities/`, latest `snapshots/` file, `memory/session-log.md`, and `.claude/timecell.local.md` (if it exists — UX preferences, not an error if missing).
 
 Determine session count by counting `## YYYY-MM-DD` lines in session-log.md. Use this for lifecycle stage per timecell.md.
 
