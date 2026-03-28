@@ -11,7 +11,7 @@ Family Office OS — AI-powered financial intelligence for family office princip
 | **timecell-indian-mf** | Indian MF: SEBI classification, NAV tracking, underperformers, SIP/XIRR, Zerodha | v1.0.0 |
 | timecell-structures | Multi-entity: trusts, companies, jurisdiction rules | Planned |
 | timecell-tax | Tax optimization: jurisdiction-specific guidance | Planned |
-| timecell-estate | Succession: wills, key packages, guardian letters | Planned |
+| **timecell-estate** | Estate: succession, trust tracking, key packages, custody audit, documents | v1.0.0 |
 | timecell-engine | Speed upgrade: deterministic Python calculations | Planned |
 
 ## Install

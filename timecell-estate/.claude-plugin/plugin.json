@@ -1,0 +1,13 @@
+{
+  "name": "timecell-estate",
+  "version": "1.0.0",
+  "description": "Estate planning, succession, trust tracking, key packages, custody audit, document registry",
+  "author": {
+    "name": "TimeCell",
+    "url": "https://github.com/timecell"
+  },
+  "repository": "https://github.com/timecell/timecell-plugins",
+  "license": "MIT",
+  "keywords": ["estate", "succession", "trust", "custody", "key-package", "documents", "family-office"],
+  "dependencies": ["timecell"]
+}
