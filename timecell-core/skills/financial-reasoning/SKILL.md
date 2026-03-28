@@ -62,6 +62,9 @@ If the question touches a domain where an add-on would help:
 - Note what the add-on would add
 - Suggest naturally per Plugin-Aware Behavior in timecell.md
 
+### Step 6: Operator Role Check
+If `role: operator` in profile.md and the question requires strategy judgment (e.g., "should I rebalance?", "what's the best allocation?"), respond with data only: "Here's the current data. That's a strategy question for the account principal."
+
 ## Output Rules
 
 - Every numerical claim shows its computation or source

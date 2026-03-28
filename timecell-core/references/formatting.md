@@ -51,6 +51,14 @@ When generating React dashboard artifacts:
 - Mobile-friendly layout (single column on small screens)
 - Self-contained — no external dependencies or data fetches
 
+## INR Formatting
+
+When `primary_currency: INR` or `base_currency: INR`:
+- Use `₹` symbol, Lakh/Crore notation: `₹1.6Cr` not `INR 16M`, `₹2.8L/mo` not `INR 280K/mo`
+- 1 Lakh = 1,00,000. 1 Crore = 1,00,00,000.
+- In tables with mixed currencies, show INR primary with USD equivalent: `₹1.6Cr ($192K)`
+- Apply Indian comma grouping: `₹1,23,45,678` not `₹12,345,678`
+
 ## Response Length Guidelines
 
 | Context | Target Length |

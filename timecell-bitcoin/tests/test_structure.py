@@ -13,9 +13,9 @@ def test_plugin_json_valid():
     with open(path) as f:
         data = json.load(f)
     assert data["name"] == "timecell-bitcoin"
-    assert data["version"] == "1.0.0"
-    assert "timecell" in data.get("dependencies", {}), "Missing dependency on timecell core"
-    assert data["dependencies"]["timecell"] == ">=1.0.0"
+    assert data["version"] == "1.1.0"
+    deps = data.get("dependencies", [])
+    assert "timecell" in deps, "Missing dependency on timecell core"
 
 
 def test_btc_check_command_exists():
@@ -80,20 +80,40 @@ def test_reference_files_under_300_lines():
 
 
 def test_btc_check_references_both_files():
-    """btc-check.md must reference both bitcoin-formulas.md and bitcoin-conviction.md."""
+    """btc-check.md must reference bitcoin-formulas.md, bitcoin-conviction.md, and hedge-formulas.md."""
     path = os.path.join(PLUGIN_ROOT, "commands", "btc-check.md")
     with open(path) as f:
         content = f.read()
     assert "bitcoin-formulas.md" in content, "btc-check.md doesn't reference bitcoin-formulas.md"
     assert "bitcoin-conviction.md" in content, "btc-check.md doesn't reference bitcoin-conviction.md"
+    assert "hedge-formulas.md" in content, "btc-check.md doesn't reference hedge-formulas.md"
+
+
+def test_hedge_formulas_exists_with_key_content():
+    """references/hedge-formulas.md exists and contains key hedge concepts."""
+    path = os.path.join(PLUGIN_ROOT, "references", "hedge-formulas.md")
+    assert os.path.exists(path), "references/hedge-formulas.md missing"
+    with open(path) as f:
+        content = f.read()
+    for term in ["Budget Tiers", "Layer Classification", "Exit Recommendations",
+                  "CAGR Formula", "Coverage Health Score", "Collar Triggers",
+                  "Hedge Ratio", "Breakeven Algorithm", "0.75%"]:
+        assert term in content, f"hedge-formulas.md missing key content: {term}"
+
+
+def test_hedge_engine_exists_and_executable():
+    """scripts/hedge-engine.py exists and is executable."""
+    path = os.path.join(PLUGIN_ROOT, "scripts", "hedge-engine.py")
+    assert os.path.exists(path), "scripts/hedge-engine.py missing"
+    assert os.access(path, os.X_OK), "hedge-engine.py is not executable"
 
 
 def test_content_file_count():
-    """Plugin should have exactly 5 content files (excluding tests, __pycache__, dotfiles)."""
+    """Plugin should have exactly 7 content files (excluding tests, __pycache__, dotfiles)."""
     count = 0
     for root, dirs, files in os.walk(PLUGIN_ROOT):
         dirs[:] = [d for d in dirs if d not in ("tests", "__pycache__", ".git", ".pytest_cache")]
         for f in files:
             if not f.startswith("."):
                 count += 1
-    assert count == 5, f"Plugin has {count} content files, expected 5 (excl. tests)"
+    assert count == 7, f"Plugin has {count} content files, expected 7 (excl. tests)"

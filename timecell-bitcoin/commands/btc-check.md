@@ -9,9 +9,9 @@ argument-hint: ""
 
 ## Step 1: Read + Fetch (1 bash call)
 
-    cat profile.md entities/*.md 2>/dev/null; echo "===BTC_SEP==="; cat references/bitcoin-formulas.md 2>/dev/null; echo "===BTC_SEP==="; cat references/bitcoin-conviction.md 2>/dev/null; echo "===BTC_SEP==="; python3 scripts/fetch-btc-data.py 2>/dev/null; echo "===BTC_SEP==="; cat .timecell/bitcoin/tier-status.md 2>/dev/null; echo "===BTC_SEP==="; cat .timecell/bitcoin/temperature-log.md 2>/dev/null
+    cat profile.md entities/*.md 2>/dev/null; echo "===BTC_SEP==="; cat references/bitcoin-formulas.md 2>/dev/null; echo "===BTC_SEP==="; cat references/bitcoin-conviction.md 2>/dev/null; echo "===BTC_SEP==="; cat references/hedge-formulas.md 2>/dev/null; echo "===BTC_SEP==="; python3 scripts/fetch-btc-data.py 2>/dev/null; echo "===BTC_SEP==="; cat .timecell/bitcoin/tier-status.md 2>/dev/null; echo "===BTC_SEP==="; cat .timecell/bitcoin/temperature-log.md 2>/dev/null
 
-Returns: profile + entities, bitcoin formulas, conviction framework, live market data (JSON), tier execution history, temperature history.
+Returns: profile + entities, bitcoin formulas, conviction framework, hedge formulas, live market data (JSON), tier execution history, temperature history.
 
 **If no entities with BTC:** Stop → "No BTC holdings found. Add a bitcoin entity first."
 
@@ -63,7 +63,24 @@ Frame per bitcoin-conviction.md:
 - Any belief tensions with user's portfolio state
 - Action items aligned to framework
 
-### 7. React Dashboard Artifact
+### 7. Hedge Status (if hedge_positions exist in profile/entities)
+
+If the user's profile or entities contain hedge positions (put options, collars, or similar):
+
+Run hedge engine calls in a single bash step:
+
+    python3 scripts/hedge-engine.py calculateHedgeCoverage '{"positions": [...], "total_btc_holdings": N, "btc_price": P}' 2>/dev/null; echo "===HEDGE_SEP==="; python3 scripts/hedge-engine.py calculateLayerExits '{"positions": [...], "btc_price": P}' 2>/dev/null; echo "===HEDGE_SEP==="; python3 scripts/hedge-engine.py calculateHedgeBudget '{"temperature": T, "portfolio_value_usd": V}' 2>/dev/null
+
+Present:
+- Coverage %, health score, nearest expiry
+- Layer exits with action recommendations
+- Budget status vs temperature-based target
+- Reference hedge-formulas.md for all threshold explanations
+- Framework attribution on all recommendations
+
+**If no hedge_positions:** Skip this section entirely. Do not mention hedging unless the user asks.
+
+### 8. React Dashboard Artifact
 Visual summary with temperature gauge, selling ladder status, crash matrix, and DCA recommendation.
 
 **Output rules:** Tables first, bold totals, whole % numbers, comma separators > 999, no emoji. Frame everything through conviction framework.

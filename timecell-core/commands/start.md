@@ -35,15 +35,22 @@ Compute from step 1 data:
 
 Write snapshot to `snapshots/YYYY-MM-DD.md` with tables.
 
+## Role Check (0 tool calls — uses Step 1 data)
+
+Read `role:` from profile.md (default: `principal`). If `role: operator`:
+- Suppress lifecycle greeting, strategy, pack beliefs, memory enrichment
+- If `managed_entities >= 2`: use multi-entity view (aggregated portfolio, entity health table sorted by worst zone, cross-entity alerts per `references/computation-formulas.md`). Filter entities by `managed_by` matching operator name.
+- If single entity: standard operator view (holdings + guardrails, no strategy)
+- Greeting: "Good [time], [name]. [N] entities under management."
+- Footer: "Data current as of [date]. Operational view — strategy deferred to principals."
+
 ## Step 3: Respond (0 tool calls)
 
-Apply lifecycle stage greeting (session count → stage: 1-3 welcome+starters, 4-10 welcome+hint, 11+ agenda).
+**Principal (default):** Apply lifecycle stage greeting. Show: portfolio table, guardrail table, delta, CRITICAL items, React dashboard artifact.
 
-1. Portfolio table
-2. Guardrail table
-3. Delta
-4. CRITICAL items only
-5. React dashboard artifact
+**Operator single entity:** Flat greeting, holdings table, guardrails, delta, alerts only.
+
+**Operator multi-entity:** Flat greeting, aggregated portfolio, entity health table, cross-entity alerts, React dashboard.
 
 **Plugin-Aware:** If `btc-check` command exists: run `python3 scripts/fetch-btc-data.py` as part of Step 1 bash call, read `references/bitcoin-formulas.md`, and add BTC Temperature + Selling Status + Crash Readiness sections. Otherwise: treat BTC as a regular asset with price from exchange rates.
 

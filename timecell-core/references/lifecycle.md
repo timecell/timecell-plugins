@@ -1,5 +1,9 @@
 # Progressive Disclosure Lifecycle — Detailed Greeting Templates
 
+## Operator Bypass
+
+If `role: operator` in profile.md, skip ALL lifecycle stages. Use flat greeting: "Good [morning/afternoon], [name]. [N] entities under management." No hints, no agenda, no drift challenges.
+
 ## Stage 1 — Onboarding (sessions 1-3)
 
 Full greeting template:

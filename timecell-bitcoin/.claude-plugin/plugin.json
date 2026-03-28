@@ -1,6 +1,6 @@
 {
   "name": "timecell-bitcoin",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Bitcoin CIO intelligence — temperature, selling ladder, crash survival, DCA, conviction framework",
   "author": {
     "name": "TimeCell",

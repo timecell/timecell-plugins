@@ -178,6 +178,32 @@ Flag allocation shifts > 5% and guardrail zone changes.
 
 ---
 
+## Entity Aggregation (Multi-Entity Operator View)
+
+```
+managed_entities = entities where managed_by matches operator name from profile.md
+
+FOR each managed_entity:
+  compute entity_nw using Net Worth formula above (per-entity)
+  compute entity_runway using Runway formula above (per-entity)
+  compute entity_guardrails using Zone Assignment above (per-entity)
+  worst_zone = most severe zone across all guardrails for that entity
+
+aggregated_nw = SUM(entity_nw for all managed_entities)
+aggregated_allocation: merge asset classes across entities, recompute percentages against aggregated_nw
+aggregated_liquid = SUM(liquid_assets per entity)
+```
+
+### Cross-Entity Alert Rules
+
+```
+1. Custodian concentration: IF > 50% of entities share the same custodian → WARNING
+2. Aggregate asset class concentration: IF any asset class > 60% of aggregated_nw → WARNING
+3. Inactivity: IF any entity has no snapshot update in > 30 days → WATCH
+```
+
+---
+
 ## Session Count
 
 ```
