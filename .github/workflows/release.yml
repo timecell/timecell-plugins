@@ -1,0 +1,31 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract version from tag
+        id: version
+        run: echo "version=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Create release zip
+        run: |
+          cd timecell-core
+          zip -r ../timecell-core-${{ steps.version.outputs.version }}.zip . \
+            -x "tests/*" -x ".claude-plugin/*" -x "__pycache__/*"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: timecell-core-${{ steps.version.outputs.version }}.zip
+          generate_release_notes: true
